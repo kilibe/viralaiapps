@@ -377,6 +377,9 @@ function loadContent(section) {
     const filtersSection = document.querySelector('.filters-section');
     const tableContainer = document.querySelector('.table-container');
     
+    // Clear any custom content first
+    clearCustomContent();
+    
     switch(section.toLowerCase()) {
         case 'tracking':
             pageHeader.textContent = 'Tracking';
@@ -390,12 +393,16 @@ function loadContent(section) {
             pageDescription.textContent = 'Comprehensive list of AI startups and emerging companies';
             filtersSection.style.display = 'block';
             tableContainer.style.display = 'block';
+            // Reload entities for startups
+            loadEntities({ type: 'startup' });
             break;
         case 'unicorns':
             pageHeader.textContent = 'AI Unicorns';
             pageDescription.textContent = 'Billion-dollar AI companies leading the industry';
             filtersSection.style.display = 'block';
             tableContainer.style.display = 'block';
+            // Load only unicorns (companies with $1B+ valuation)
+            loadEntities({ minValuation: 1000000000 });
             break;
         case 'reports':
             pageHeader.textContent = 'Viral AI Apps Weekly Reports';
@@ -414,68 +421,86 @@ function loadContent(section) {
     }
 }
 
+function clearCustomContent() {
+    const customContent = document.querySelector('.custom-content');
+    if (customContent) {
+        customContent.remove();
+    }
+}
+
 // Placeholder functions for different sections
 function showTrackingContent() {
     const mainContent = document.querySelector('.main-content');
-    let trackingContainer = document.querySelector('.tracking-container');
-    
-    if (!trackingContainer) {
-        trackingContainer = document.createElement('div');
-        trackingContainer.className = 'tracking-container';
-        trackingContainer.innerHTML = `
-            <div class="coming-soon">
-                <h2>Coming Soon</h2>
-                <p>Track your favorite AI applications and get notified when they reach key milestones.</p>
-            </div>
-        `;
-        mainContent.appendChild(trackingContainer);
-    }
-    
-    trackingContainer.style.display = 'block';
+    const customContent = document.createElement('div');
+    customContent.className = 'custom-content';
+    customContent.innerHTML = `
+        <div class="coming-soon" style="text-align: center; padding: 60px 20px; background: #f8f9fa; border-radius: 12px; margin-top: 20px;">
+            <h2 style="color: #2d3748; margin-bottom: 16px;">🎯 Personal Tracking Dashboard</h2>
+            <p style="color: #4a5568; font-size: 16px; margin-bottom: 20px;">Track your favorite AI applications and get notified when they reach key milestones.</p>
+            <p style="color: #718096; font-size: 14px;">Coming Soon - Stay Tuned!</p>
+        </div>
+    `;
+    mainContent.appendChild(customContent);
 }
 
 function showReportsContent() {
     const mainContent = document.querySelector('.main-content');
-    let reportsContainer = document.querySelector('.reports-container');
-    
-    if (!reportsContainer) {
-        reportsContainer = document.createElement('div');
-        reportsContainer.className = 'reports-container';
-        reportsContainer.innerHTML = `
-            <div class="newsletter-grid">
-                <div class="newsletter-card">
-                    <div class="newsletter-header">
-                        <h3>Weekly Report #24</h3>
-                        <span class="date">January 29, 2025</span>
-                    </div>
-                    <div class="newsletter-preview">
-                        <p>This week: ChatGPT reaches 200M users, new AI coding assistants emerge, and breakthrough in multimodal AI...</p>
-                    </div>
-                    <a href="#" class="read-more">Read Full Report →</a>
+    const customContent = document.createElement('div');
+    customContent.className = 'custom-content';
+    customContent.innerHTML = `
+        <div class="newsletter-grid" style="margin-top: 20px;">
+            <div class="newsletter-card" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                <div class="newsletter-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="color: #2d3748; margin: 0;">📊 Weekly Report #24</h3>
+                    <span class="date" style="color: #718096; font-size: 14px;">January 29, 2025</span>
                 </div>
+                <div class="newsletter-preview" style="margin-bottom: 16px;">
+                    <p style="color: #4a5568; line-height: 1.6; margin: 0;">This week: ChatGPT reaches 200M users, new AI coding assistants emerge, and breakthrough in multimodal AI technology reshapes the industry landscape...</p>
+                </div>
+                <a href="#" class="read-more" style="color: #FF4500; text-decoration: none; font-weight: 500;">Read Full Report →</a>
             </div>
-        `;
-        mainContent.appendChild(reportsContainer);
-    }
-    
-    reportsContainer.style.display = 'block';
+            <div class="newsletter-card" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                <div class="newsletter-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="color: #2d3748; margin: 0;">📈 Weekly Report #23</h3>
+                    <span class="date" style="color: #718096; font-size: 14px;">January 22, 2025</span>
+                </div>
+                <div class="newsletter-preview" style="margin-bottom: 16px;">
+                    <p style="color: #4a5568; line-height: 1.6; margin: 0;">Major AI funding rounds this week, including $50M Series B for leading AI video platform, plus analysis of emerging trends in AI-powered productivity tools...</p>
+                </div>
+                <a href="#" class="read-more" style="color: #FF4500; text-decoration: none; font-weight: 500;">Read Full Report →</a>
+            </div>
+        </div>
+    `;
+    mainContent.appendChild(customContent);
 }
 
 function showApiContent() {
     const mainContent = document.querySelector('.main-content');
-    let apiContainer = document.querySelector('.api-container');
-    
-    if (!apiContainer) {
-        apiContainer = document.createElement('div');
-        apiContainer.className = 'api-container';
-        apiContainer.innerHTML = `
-            <div class="coming-soon">
-                <h2>Coming Soon</h2>
-                <p>Our API documentation and endpoints are currently under development.</p>
+    const customContent = document.createElement('div');
+    customContent.className = 'custom-content';
+    customContent.innerHTML = `
+        <div class="api-docs" style="margin-top: 20px;">
+            <div class="api-section" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                <h3 style="color: #2d3748; margin-bottom: 16px;">🚀 Get Started</h3>
+                <p style="color: #4a5568; line-height: 1.6; margin-bottom: 16px;">Access our comprehensive AI startup database through our REST API.</p>
+                <div class="code-block" style="background: #f7fafc; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                    <code style="color: #2d3748; font-family: 'Monaco', 'Consolas', monospace;">
+                        GET https://api.viralaiapps.com/v1/startups<br>
+                        Authorization: Bearer YOUR_API_KEY
+                    </code>
+                </div>
+                <p style="color: #718096; font-size: 14px; margin: 0;">API documentation and endpoints are currently under development. Sign up to be notified when they're ready!</p>
             </div>
-        `;
-        mainContent.appendChild(apiContainer);
-    }
-    
-    apiContainer.style.display = 'block';
+            <div class="api-section" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <h3 style="color: #2d3748; margin-bottom: 16px;">📋 Available Endpoints</h3>
+                <ul style="color: #4a5568; line-height: 1.8; margin: 0; padding-left: 20px;">
+                    <li>/startups - Get AI startup data</li>
+                    <li>/unicorns - Get billion-dollar AI companies</li>
+                    <li>/metrics - Get growth and usage metrics</li>
+                    <li>/forecasts - Get AI-powered growth predictions</li>
+                </ul>
+            </div>
+        </div>
+    `;
+    mainContent.appendChild(customContent);
 }
