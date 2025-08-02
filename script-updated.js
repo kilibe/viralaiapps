@@ -11,20 +11,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function initializeApp() {
+    console.log('Initializing app...');
+    
     // Initialize modal functionality
+    console.log('Initializing modal...');
     initializeModal();
     
     // Initialize dropdowns
+    console.log('Initializing dropdowns...');
     initializeDropdowns();
     
     // Initialize navigation
+    console.log('Initializing navigation...');
     initializeNavigation();
     
     // Load entities from Supabase
+    console.log('Loading entities...');
     await loadEntities();
     
     // Add row click handlers
+    console.log('Initializing row click handlers...');
     initializeRowClickHandlers();
+    
+    console.log('App initialization complete!');
 }
 
 async function loadEntities(filters = {}) {
@@ -310,10 +319,13 @@ async function applyFilters() {
 // Initialize navigation
 function initializeNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
+    console.log('Found navigation items:', navItems.length);
     
-    navItems.forEach(item => {
+    navItems.forEach((item, index) => {
+        console.log(`Setting up click listener for item ${index}:`, item.textContent);
         item.addEventListener('click', function(e) {
             e.preventDefault();
+            console.log('Navigation clicked:', this.textContent);
             
             // Remove active class from all items
             navItems.forEach(navItem => {
