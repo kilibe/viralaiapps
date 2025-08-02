@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral AI Apps - Trending AI Projects Directory</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Navigation Bar -->
+        <nav class="sidebar">
+            <div class="sidebar-top">
+                <div class="logo">
+                <div class="logo-icon">
+                    <svg width="80" height="80" viewBox="0 0 416 416" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="208" cy="208" r="144" fill="#FF4500"/>
+                        <circle cx="208" cy="24" r="24" fill="#FF4500"/>
+                        <circle cx="208" cy="392" r="24" fill="#FF4500"/>
+                        <circle cx="24" cy="208" r="24" fill="#FF4500"/>
+                        <circle cx="392" cy="208" r="24" fill="#FF4500"/>
+                        <circle cx="88" cy="88" r="20" fill="#FF4500"/>
+                        <circle cx="328" cy="88" r="20" fill="#FF4500"/>
+                        <circle cx="88" cy="328" r="20" fill="#FF4500"/>
+                        <circle cx="328" cy="328" r="20" fill="#FF4500"/>
+                        <circle cx="136" cy="168" r="16" fill="white"/>
+                        <circle cx="280" cy="168" r="16" fill="white"/>
+                        <path d="M168 264C168 264 188 304 208 304C228 304 248 264 248 264" stroke="white" stroke-width="12" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-line1">viralai</div>
+                    <div class="logo-line2">apps.com</div>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#tracking" class="nav-item active">Tracking</a></li>
+                <li><a href="#startups" class="nav-item">Startups</a></li>
+                <li><a href="#unicorns" class="nav-item">Unicorns</a></li>
+                <li><a href="#reports" class="nav-item">Reports</a></li>
+                <li><a href="#api" class="nav-item">API</a></li>
+            </ul>
+            </div>
+            
+            <div class="nav-footer">
+                <a href="#cookie" class="nav-icon" title="Cookie Policy">🍪</a>
+                <a href="#legal" class="nav-icon" title="Legal">⚖️</a>
+                <a href="#contact" class="nav-icon" title="Contact Us">👤</a>
+                <a href="#settings" class="nav-icon" title="Settings">⚙️</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="page-header">
+                <h1>Trending AI Startups</h1>
+                <p>Discover the fastest-growing AI projects and applications</p>
+            </header>
+
+            <!-- Filters Section -->
+            <div class="filters-section">
+                <div class="filter-group">
+                    <div class="dropdown">
+                        <button class="dropdown-btn">
+                            Time frame <span class="arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#">Last 7 days</a>
+                            <a href="#">Last 30 days</a>
+                            <a href="#">Last 3 months</a>
+                            <a href="#">Last 6 months</a>
+                            <a href="#">Last 12 months</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="dropdown-btn">
+                            Category <span class="arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#">All Categories</a>
+                            <a href="#" class="category-teal">General chatbots</a>
+                            <a href="#" class="category-teal">Writing</a>
+                            <a href="#" class="category-teal">Research</a>
+                            <a href="#" class="category-teal">Browser</a>
+                            <a href="#" class="category-teal">Translation</a>
+                            <a href="#" class="category-teal">Reader</a>
+                            <a href="#" class="category-orange">Image gen</a>
+                            <a href="#" class="category-orange">Video gen</a>
+                            <a href="#" class="category-orange">Voice gen</a>
+                            <a href="#" class="category-orange">Avatar gen</a>
+                            <a href="#" class="category-navy">Workflow</a>
+                            <a href="#" class="category-navy">Office tools & productivity</a>
+                            <a href="#" class="category-navy">Prompts</a>
+                            <a href="#" class="category-navy">Memory</a>
+                            <a href="#" class="category-navy">Organize</a>
+                            <a href="#" class="category-dark">Build & code</a>
+                            <a href="#" class="category-dark">Design & UI</a>
+                            <a href="#" class="category-bronze">Marketing & SEO</a>
+                            <a href="#" class="category-bronze">Sales & CRM</a>
+                            <a href="#" class="category-maroon">Companion</a>
+                            <a href="#" class="category-maroon">Music</a>
+                            <a href="#" class="category-maroon">Finance</a>
+                            <a href="#" class="category-maroon">Mobile</a>
+                            <a href="#" class="category-maroon">Architect</a>
+                            <a href="#" class="category-slate">LLMs</a>
+                            <a href="#" class="category-slate">Training</a>
+                            <a href="#" class="category-slate">Benchmark</a>
+                            <a href="#" class="category-slate">APIs</a>
+                            <a href="#" class="category-slate">Enterprise</a>
+                            <a href="#" class="category-slate">Security</a>
+                            <a href="#" class="category-slate">Health</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="dropdown-btn">
+                            Growth <span class="arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#">Any Growth</a>
+                            <a href="#">100%+</a>
+                            <a href="#">500%+</a>
+                            <a href="#">1000%+</a>
+                            <a href="#">5000%+</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="dropdown-btn">
+                            Volume <span class="arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#">Any Volume</a>
+                            <a href="#">1K+ users</a>
+                            <a href="#">10K+ users</a>
+                            <a href="#">100K+ users</a>
+                            <a href="#">1M+ users</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="dropdown-btn">
+                            Total funding <span class="arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#">Any Funding</a>
+                            <a href="#">$1M+</a>
+                            <a href="#">$10M+</a>
+                            <a href="#">$50M+</a>
+                            <a href="#">$100M+</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="dropdown-btn">
+                            Latest round <span class="arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#">Any Round</a>
+                            <a href="#">Seed</a>
+                            <a href="#">Series A</a>
+                            <a href="#">Series B</a>
+                            <a href="#">Series C+</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Table -->
+            <div class="table-container">
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Growth</th>
+                            <th>Volume</th>
+                            <th>Total Funding</th>
+                            <th>Latest Round</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="clickable-row" data-entity-id="" data-entity-name="ChatGPT">
+                            <td>
+                                <div class="app-info">
+                                    <strong>ChatGPT</strong>
+                                    <div class="app-description">AI-powered conversational assistant for various tasks</div>
+                                </div>
+                            </td>
+                            <td class="growth-positive">+2,340%</td>
+                            <td>100M+ users</td>
+                            <td>$11.3B</td>
+                            <td>Series C</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="app-info">
+                                    <strong>Midjourney</strong>
+                                    <div class="app-description">AI image generation platform for creative professionals</div>
+                                </div>
+                            </td>
+                            <td class="growth-positive">+1,890%</td>
+                            <td>15M+ users</td>
+                            <td>$200M</td>
+                            <td>Series A</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="app-info">
+                                    <strong>Stable Diffusion</strong>
+                                    <div class="app-description">Open-source AI model for text-to-image generation</div>
+                                </div>
+                            </td>
+                            <td class="growth-positive">+1,567%</td>
+                            <td>10M+ users</td>
+                            <td>$101M</td>
+                            <td>Seed</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="app-info">
+                                    <strong>Notion AI</strong>
+                                    <div class="app-description">AI writing assistant integrated into productivity workspace</div>
+                                </div>
+                            </td>
+                            <td class="growth-positive">+987%</td>
+                            <td>30M+ users</td>
+                            <td>$343M</td>
+                            <td>Series C</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="app-info">
+                                    <strong>GitHub Copilot</strong>
+                                    <div class="app-description">AI-powered code completion and programming assistant</div>
+                                </div>
+                            </td>
+                            <td class="growth-positive">+745%</td>
+                            <td>1M+ users</td>
+                            <td>N/A</td>
+                            <td>Microsoft</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Container -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="supabase-client.js"></script>
+    <script src="chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

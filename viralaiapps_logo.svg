@@ -1,0 +1,25 @@
+
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .text { font: bold 48px sans-serif; fill: #FF4500; }
+    .icon { fill: #FF4500; }
+  </style>
+  <g transform="translate(50, 100)">
+    <circle class="icon" cx="100" cy="100" r="80"/>
+    <circle cx="70" cy="80" r="10" fill="#fff"/>
+    <circle cx="130" cy="80" r="10" fill="#fff"/>
+    <path d="M70 130 Q100 160 130 130" stroke="#fff" stroke-width="8" fill="none"/>
+    <g class="icon">
+      <circle cx="100" cy="10" r="10"/>
+      <circle cx="100" cy="190" r="10"/>
+      <circle cx="10" cy="100" r="10"/>
+      <circle cx="190" cy="100" r="10"/>
+      <circle cx="40" cy="40" r="10"/>
+      <circle cx="160" cy="40" r="10"/>
+      <circle cx="40" cy="160" r="10"/>
+      <circle cx="160" cy="160" r="10"/>
+    </g>
+  </g>
+  <text x="260" y="180" class="text">viralai</text>
+  <text x="260" y="240" class="text">apps.com</text>
+</svg>
