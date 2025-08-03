@@ -71,108 +71,109 @@
             <!-- Filters Section -->
             <div class="filters-section">
                 <div class="filter-group">
-                    <div class="dropdown">
+                    <div class="dropdown" data-filter="timeFrame">
                         <button class="dropdown-btn">
                             Time frame <span class="arrow">▼</span>
                         </button>
                         <div class="dropdown-content">
-                            <a href="#">Last 7 days</a>
-                            <a href="#">Last 30 days</a>
-                            <a href="#">Last 3 months</a>
-                            <a href="#">Last 6 months</a>
-                            <a href="#">Last 12 months</a>
+                            <a href="#" data-value="">Any Time</a>
+                            <a href="#" data-value="7">Last 7 days</a>
+                            <a href="#" data-value="30">Last 30 days</a>
+                            <a href="#" data-value="90">Last 3 months</a>
+                            <a href="#" data-value="180">Last 6 months</a>
+                            <a href="#" data-value="365">Last 12 months</a>
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown" data-filter="category">
                         <button class="dropdown-btn">
                             Category <span class="arrow">▼</span>
                         </button>
                         <div class="dropdown-content">
-                            <a href="#">All Categories</a>
-                            <a href="#" class="category-teal">General chatbots</a>
-                            <a href="#" class="category-teal">Writing</a>
-                            <a href="#" class="category-teal">Research</a>
-                            <a href="#" class="category-teal">Browser</a>
-                            <a href="#" class="category-teal">Translation</a>
-                            <a href="#" class="category-teal">Reader</a>
-                            <a href="#" class="category-orange">Image gen</a>
-                            <a href="#" class="category-orange">Video gen</a>
-                            <a href="#" class="category-orange">Voice gen</a>
-                            <a href="#" class="category-orange">Avatar gen</a>
-                            <a href="#" class="category-navy">Workflow</a>
-                            <a href="#" class="category-navy">Office tools & productivity</a>
-                            <a href="#" class="category-navy">Prompts</a>
-                            <a href="#" class="category-navy">Memory</a>
-                            <a href="#" class="category-navy">Organize</a>
-                            <a href="#" class="category-dark">Build & code</a>
-                            <a href="#" class="category-dark">Design & UI</a>
-                            <a href="#" class="category-bronze">Marketing & SEO</a>
-                            <a href="#" class="category-bronze">Sales & CRM</a>
-                            <a href="#" class="category-maroon">Companion</a>
-                            <a href="#" class="category-maroon">Music</a>
-                            <a href="#" class="category-maroon">Finance</a>
-                            <a href="#" class="category-maroon">Mobile</a>
-                            <a href="#" class="category-maroon">Architect</a>
-                            <a href="#" class="category-slate">LLMs</a>
-                            <a href="#" class="category-slate">Training</a>
-                            <a href="#" class="category-slate">Benchmark</a>
-                            <a href="#" class="category-slate">APIs</a>
-                            <a href="#" class="category-slate">Enterprise</a>
-                            <a href="#" class="category-slate">Security</a>
-                            <a href="#" class="category-slate">Health</a>
+                            <a href="#" data-value="">All Categories</a>
+                            <a href="#" data-value="General chatbots" class="category-teal">General chatbots</a>
+                            <a href="#" data-value="Writing" class="category-teal">Writing</a>
+                            <a href="#" data-value="Research" class="category-teal">Research</a>
+                            <a href="#" data-value="Browser" class="category-teal">Browser</a>
+                            <a href="#" data-value="Translation" class="category-teal">Translation</a>
+                            <a href="#" data-value="Reader" class="category-teal">Reader</a>
+                            <a href="#" data-value="Image gen" class="category-orange">Image gen</a>
+                            <a href="#" data-value="Video gen" class="category-orange">Video gen</a>
+                            <a href="#" data-value="Voice gen" class="category-orange">Voice gen</a>
+                            <a href="#" data-value="Avatar gen" class="category-orange">Avatar gen</a>
+                            <a href="#" data-value="Workflow" class="category-navy">Workflow</a>
+                            <a href="#" data-value="Office tools & productivity" class="category-navy">Office tools & productivity</a>
+                            <a href="#" data-value="Prompts" class="category-navy">Prompts</a>
+                            <a href="#" data-value="Memory" class="category-navy">Memory</a>
+                            <a href="#" data-value="Organize" class="category-navy">Organize</a>
+                            <a href="#" data-value="Build & code" class="category-dark">Build & code</a>
+                            <a href="#" data-value="Design & UI" class="category-dark">Design & UI</a>
+                            <a href="#" data-value="Marketing & SEO" class="category-bronze">Marketing & SEO</a>
+                            <a href="#" data-value="Sales & CRM" class="category-bronze">Sales & CRM</a>
+                            <a href="#" data-value="Companion" class="category-maroon">Companion</a>
+                            <a href="#" data-value="Music" class="category-maroon">Music</a>
+                            <a href="#" data-value="Finance" class="category-maroon">Finance</a>
+                            <a href="#" data-value="Mobile" class="category-maroon">Mobile</a>
+                            <a href="#" data-value="Architect" class="category-maroon">Architect</a>
+                            <a href="#" data-value="LLMs" class="category-slate">LLMs</a>
+                            <a href="#" data-value="Training" class="category-slate">Training</a>
+                            <a href="#" data-value="Benchmark" class="category-slate">Benchmark</a>
+                            <a href="#" data-value="APIs" class="category-slate">APIs</a>
+                            <a href="#" data-value="Enterprise" class="category-slate">Enterprise</a>
+                            <a href="#" data-value="Security" class="category-slate">Security</a>
+                            <a href="#" data-value="Health" class="category-slate">Health</a>
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown" data-filter="minGrowth">
                         <button class="dropdown-btn">
                             Growth <span class="arrow">▼</span>
                         </button>
                         <div class="dropdown-content">
-                            <a href="#">Any Growth</a>
-                            <a href="#">100%+</a>
-                            <a href="#">500%+</a>
-                            <a href="#">1000%+</a>
-                            <a href="#">5000%+</a>
+                            <a href="#" data-value="">Any Growth</a>
+                            <a href="#" data-value="100">100%+</a>
+                            <a href="#" data-value="500">500%+</a>
+                            <a href="#" data-value="1000">1000%+</a>
+                            <a href="#" data-value="5000">5000%+</a>
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown" data-filter="minVolume">
                         <button class="dropdown-btn">
                             Volume <span class="arrow">▼</span>
                         </button>
                         <div class="dropdown-content">
-                            <a href="#">Any Volume</a>
-                            <a href="#">1K+ users</a>
-                            <a href="#">10K+ users</a>
-                            <a href="#">100K+ users</a>
-                            <a href="#">1M+ users</a>
+                            <a href="#" data-value="">Any Volume</a>
+                            <a href="#" data-value="1000">1K+ users</a>
+                            <a href="#" data-value="10000">10K+ users</a>
+                            <a href="#" data-value="100000">100K+ users</a>
+                            <a href="#" data-value="1000000">1M+ users</a>
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown" data-filter="minFunding">
                         <button class="dropdown-btn">
                             Total funding <span class="arrow">▼</span>
                         </button>
                         <div class="dropdown-content">
-                            <a href="#">Any Funding</a>
-                            <a href="#">$1M+</a>
-                            <a href="#">$10M+</a>
-                            <a href="#">$50M+</a>
-                            <a href="#">$100M+</a>
+                            <a href="#" data-value="">Any Funding</a>
+                            <a href="#" data-value="1000000">$1M+</a>
+                            <a href="#" data-value="10000000">$10M+</a>
+                            <a href="#" data-value="50000000">$50M+</a>
+                            <a href="#" data-value="100000000">$100M+</a>
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown" data-filter="roundType">
                         <button class="dropdown-btn">
                             Latest round <span class="arrow">▼</span>
                         </button>
                         <div class="dropdown-content">
-                            <a href="#">Any Round</a>
-                            <a href="#">Seed</a>
-                            <a href="#">Series A</a>
-                            <a href="#">Series B</a>
-                            <a href="#">Series C+</a>
+                            <a href="#" data-value="">Any Round</a>
+                            <a href="#" data-value="Seed">Seed</a>
+                            <a href="#" data-value="Series A">Series A</a>
+                            <a href="#" data-value="Series B">Series B</a>
+                            <a href="#" data-value="Series C/+">Series C/+</a>
                         </div>
                     </div>
                 </div>
@@ -309,6 +310,172 @@
         }
     })();
     
+    // Function to display entities in the table
+    function displayEntities(entities) {
+        const tbody = document.getElementById('table-body');
+        
+        if (!entities || entities.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No entities match your filters</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = '';
+        
+        entities.forEach(entity => {
+            const row = document.createElement('tr');
+            row.className = 'clickable-row';
+            row.dataset.entityId = entity.id;
+            row.dataset.entityName = entity.name;
+            
+            // Format values
+            const formatNumber = (num) => {
+                if (!num) return 'N/A';
+                if (num >= 1000000000) return (num / 1000000000).toFixed(1) + 'B';
+                if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+                if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+                return num.toString();
+            };
+            
+            const growth = entity.growth_rate_30d || 0;
+            const growthClass = growth > 0 ? 'growth-positive' : '';
+            
+            // Get category class
+            const getCategoryClass = (category) => {
+                const categoryMap = {
+                    'general chatbots': 'teal',
+                    'writing': 'teal',
+                    'research': 'teal',
+                    'browser': 'teal',
+                    'translation': 'teal',
+                    'reader': 'teal',
+                    'image gen': 'orange',
+                    'video gen': 'orange',
+                    'voice gen': 'orange',
+                    'avatar gen': 'orange',
+                    'workflow': 'navy',
+                    'office tools & productivity': 'navy',
+                    'prompts': 'navy',
+                    'memory': 'navy',
+                    'organize': 'navy',
+                    'build & code': 'dark',
+                    'design & ui': 'dark',
+                    'marketing & seo': 'bronze',
+                    'sales & crm': 'bronze',
+                    'companion': 'maroon',
+                    'music': 'maroon',
+                    'finance': 'maroon',
+                    'mobile': 'maroon',
+                    'architect': 'maroon',
+                    'llms': 'slate',
+                    'training': 'slate',
+                    'benchmark': 'slate',
+                    'apis': 'slate',
+                    'enterprise': 'slate',
+                    'security': 'slate',
+                    'health': 'slate'
+                };
+                return categoryMap[category.toLowerCase()] || 'slate';
+            };
+            
+            row.innerHTML = `
+                <td>
+                    <div class="app-info">
+                        <strong>${entity.name}</strong>
+                        <div class="app-description">${entity.short_description || ''}</div>
+                    </div>
+                </td>
+                <td class="${growthClass}">${growth > 0 ? '+' : ''}${parseFloat(growth).toFixed(0)}%</td>
+                <td>${formatNumber(entity.volume)} users</td>
+                <td>${formatNumber(entity.latest_funding_amount)}</td>
+                <td>${entity.latest_round_type || 'N/A'}</td>
+                <td><span class="category-${getCategoryClass(entity.category)}">${entity.category}</span></td>
+            `;
+            
+            // Add click handler
+            row.addEventListener('click', () => {
+                showEntityDetails(entity.id, entity.name);
+            });
+            
+            tbody.appendChild(row);
+        });
+    }
+    
+    // Function to apply filters
+    function applyFilters() {
+        let filteredEntities = [...allEntities];
+        
+        // Apply category filter
+        if (currentFilters.category) {
+            filteredEntities = filteredEntities.filter(entity => {
+                if (Array.isArray(entity.category)) {
+                    return entity.category.some(cat => 
+                        cat.toLowerCase() === currentFilters.category.toLowerCase()
+                    );
+                } else {
+                    return entity.category?.toLowerCase() === currentFilters.category.toLowerCase();
+                }
+            });
+        }
+        
+        // Apply growth filter
+        if (currentFilters.minGrowth) {
+            filteredEntities = filteredEntities.filter(entity => 
+                (entity.growth_rate_30d || 0) >= currentFilters.minGrowth
+            );
+        }
+        
+        // Apply volume filter
+        if (currentFilters.minVolume) {
+            filteredEntities = filteredEntities.filter(entity => 
+                (entity.volume || 0) >= currentFilters.minVolume
+            );
+        }
+        
+        // Apply funding filter
+        if (currentFilters.minFunding) {
+            filteredEntities = filteredEntities.filter(entity => 
+                (entity.latest_funding_amount || 0) >= currentFilters.minFunding
+            );
+        }
+        
+        // Apply round type filter
+        if (currentFilters.roundType) {
+            if (currentFilters.roundType === 'Series C/+') {
+                // For Series C/+, include Series C, D, E, F, etc.
+                filteredEntities = filteredEntities.filter(entity => {
+                    const round = entity.latest_round_type;
+                    if (!round) return false;
+                    
+                    // Check if it's Series C or higher
+                    const seriesMatch = round.match(/Series\s+([C-Z])/i);
+                    if (seriesMatch) {
+                        const letter = seriesMatch[1].toUpperCase();
+                        return letter >= 'C';
+                    }
+                    return false;
+                });
+            } else {
+                filteredEntities = filteredEntities.filter(entity => 
+                    entity.latest_round_type === currentFilters.roundType
+                );
+            }
+        }
+        
+        // Apply time frame filter (would need created_at or similar field in the data)
+        if (currentFilters.timeFrame) {
+            const daysAgo = parseInt(currentFilters.timeFrame);
+            const cutoffDate = new Date();
+            cutoffDate.setDate(cutoffDate.getDate() - daysAgo);
+            
+            // This would need a created_at field in your entities
+            // filteredEntities = filteredEntities.filter(entity => 
+            //     new Date(entity.created_at) >= cutoffDate
+            // );
+        }
+        
+        displayEntities(filteredEntities);
+    }
+    
     // Function to show entity details
     async function showEntityDetails(entityId, entityName) {
         const modalOverlay = document.getElementById('modalOverlay');
@@ -376,6 +543,9 @@
                 return num.toString();
             };
             
+            // Make formatNumber available globally for the chart
+            window.formatNumber = formatNumber;
+            
             const volume = latestMetric.volume || 0;
             const growth = latestIndicator.growth_rate_30d || 0;
             const fundingAmount = latestFunding.amount || 0;
@@ -431,7 +601,7 @@
                             ${historicalMetrics && historicalMetrics.length > 1 ? 
                                 '<canvas id="growthChart" width="800" height="300"></canvas>' : 
                                 `<div style="padding: 80px; text-align: center; color: #999;">
-                                    <h3>Growth Chart</h3>
+                                    <h3>Volume Chart</h3>
                                     <p>${historicalMetrics && historicalMetrics.length === 1 ? 
                                         'Not enough historical data to display a chart' : 
                                         'No historical data available for this entity'}</p>
@@ -462,7 +632,7 @@
                         const ctx = canvas.getContext('2d');
                         const width = 800;
                         const height = 300;
-                        const padding = 40;
+                        const padding = 50; // Increased for axis labels
                         
                         // Clear canvas
                         ctx.clearRect(0, 0, width, height);
@@ -488,19 +658,56 @@
                         
                         // Draw grid lines
                         ctx.strokeStyle = '#f0f0f0';
+                        ctx.lineWidth = 1;
+                        
+                        // Horizontal grid lines with labels
                         for (let i = 0; i <= 4; i++) {
                             const y = padding + (height - 2 * padding) * i / 4;
+                            const value = maxValue - (maxValue - minValue) * i / 4;
+                            
                             ctx.beginPath();
                             ctx.moveTo(padding, y);
                             ctx.lineTo(width - padding, y);
                             ctx.stroke();
+                            
+                            // Add intermediate labels
+                            if (i > 0 && i < 4) {
+                                ctx.fillStyle = '#999';
+                                ctx.font = '11px sans-serif';
+                                ctx.textAlign = 'right';
+                                // Format number inline
+                                let formattedValue = value.toString();
+                                if (value >= 1000000000) formattedValue = (value / 1000000000).toFixed(1) + 'B';
+                                else if (value >= 1000000) formattedValue = (value / 1000000).toFixed(1) + 'M';
+                                else if (value >= 1000) formattedValue = (value / 1000).toFixed(1) + 'K';
+                                ctx.fillText(formattedValue, padding - 10, y + 4);
+                            }
                         }
                         
-                        // Draw line chart
+                        // Vertical grid lines
+                        const dateStep = Math.floor(data.length / 5) || 1;
+                        data.forEach((point, index) => {
+                            if (index % dateStep === 0 && index > 0 && index < data.length - 1) {
+                                const x = padding + (width - 2 * padding) * index / (data.length - 1);
+                                ctx.strokeStyle = '#f5f5f5';
+                                ctx.beginPath();
+                                ctx.moveTo(x, padding);
+                                ctx.lineTo(x, height - padding);
+                                ctx.stroke();
+                            }
+                        });
+                        
+                        // Draw line chart with gradient fill
                         ctx.strokeStyle = '#4F46E5';
                         ctx.lineWidth = 2;
-                        ctx.beginPath();
                         
+                        // Create gradient fill
+                        const gradient = ctx.createLinearGradient(0, padding, 0, height - padding);
+                        gradient.addColorStop(0, 'rgba(79, 70, 229, 0.2)');
+                        gradient.addColorStop(1, 'rgba(79, 70, 229, 0.02)');
+                        
+                        // Draw filled area
+                        ctx.beginPath();
                         data.forEach((point, index) => {
                             const x = padding + (width - 2 * padding) * index / (data.length - 1);
                             const y = height - padding - ((point.value - minValue) / valueRange) * (height - 2 * padding);
@@ -512,6 +719,25 @@
                             }
                         });
                         
+                        // Complete the fill area
+                        ctx.lineTo(padding + (width - 2 * padding), height - padding);
+                        ctx.lineTo(padding, height - padding);
+                        ctx.closePath();
+                        ctx.fillStyle = gradient;
+                        ctx.fill();
+                        
+                        // Draw the line on top
+                        ctx.beginPath();
+                        data.forEach((point, index) => {
+                            const x = padding + (width - 2 * padding) * index / (data.length - 1);
+                            const y = height - padding - ((point.value - minValue) / valueRange) * (height - 2 * padding);
+                            
+                            if (index === 0) {
+                                ctx.moveTo(x, y);
+                            } else {
+                                ctx.lineTo(x, y);
+                            }
+                        });
                         ctx.stroke();
                         
                         // Draw points
@@ -535,19 +761,130 @@
                             return (date.getMonth() + 1) + '/' + date.getDate();
                         };
                         
-                        ctx.fillText(dateFormat(data[0].date), padding, height - padding + 20);
-                        ctx.fillText(dateFormat(data[data.length - 1].date), width - padding, height - padding + 20);
+                        // Show multiple date labels
+                        const dateStep = Math.floor(data.length / 5) || 1;
+                        data.forEach((point, index) => {
+                            if (index % dateStep === 0 || index === data.length - 1) {
+                                const x = padding + (width - 2 * padding) * index / (data.length - 1);
+                                ctx.fillText(dateFormat(point.date), x, height - padding + 20);
+                            }
+                        });
+                        
+                        // X-axis label
+                        ctx.textAlign = 'center';
+                        ctx.fillText('Date', width / 2, height - 5);
                         
                         // Y-axis labels
                         ctx.textAlign = 'right';
-                        ctx.fillText(formatNumber(maxValue), padding - 10, padding + 5);
-                        ctx.fillText(formatNumber(minValue), padding - 10, height - padding + 5);
+                        // Format max value
+                        let formattedMax = maxValue.toString();
+                        if (maxValue >= 1000000000) formattedMax = (maxValue / 1000000000).toFixed(1) + 'B';
+                        else if (maxValue >= 1000000) formattedMax = (maxValue / 1000000).toFixed(1) + 'M';
+                        else if (maxValue >= 1000) formattedMax = (maxValue / 1000).toFixed(1) + 'K';
+                        
+                        // Format min value
+                        let formattedMin = minValue.toString();
+                        if (minValue >= 1000000000) formattedMin = (minValue / 1000000000).toFixed(1) + 'B';
+                        else if (minValue >= 1000000) formattedMin = (minValue / 1000000).toFixed(1) + 'M';
+                        else if (minValue >= 1000) formattedMin = (minValue / 1000).toFixed(1) + 'K';
+                        
+                        ctx.fillText(formattedMax, padding - 10, padding + 5);
+                        ctx.fillText(formattedMin, padding - 10, height - padding + 5);
+                        
+                        // Y-axis label
+                        ctx.save();
+                        ctx.translate(15, height / 2);
+                        ctx.rotate(-Math.PI / 2);
+                        ctx.textAlign = 'center';
+                        ctx.fillText('Volume (Users)', 0, 0);
+                        ctx.restore();
                         
                         // Title
                         ctx.fillStyle = '#333';
                         ctx.font = '16px sans-serif';
                         ctx.textAlign = 'center';
                         ctx.fillText('Volume Over Time', width / 2, padding - 10);
+                        
+                        // Add hover interaction
+                        canvas.style.cursor = 'crosshair';
+                        
+                        // Store data for hover
+                        canvas.chartData = data;
+                        canvas.chartDimensions = { width, height, padding, valueRange, minValue, maxValue };
+                        
+                        // Mouse move handler
+                        canvas.onmousemove = function(e) {
+                            const rect = canvas.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            
+                            // Check if within chart area
+                            if (x >= padding && x <= width - padding && y >= padding && y <= height - padding) {
+                                // Find closest data point
+                                const dataIndex = Math.round(((x - padding) / (width - 2 * padding)) * (data.length - 1));
+                                if (dataIndex >= 0 && dataIndex < data.length) {
+                                    const point = data[dataIndex];
+                                    const pointX = padding + (width - 2 * padding) * dataIndex / (data.length - 1);
+                                    const pointY = height - padding - ((point.value - minValue) / valueRange) * (height - 2 * padding);
+                                    
+                                    // Clear and redraw
+                                    ctx.clearRect(0, 0, width, height);
+                                    
+                                    // Redraw everything (simplified)
+                                    // Draw axes
+                                    ctx.strokeStyle = '#e0e0e0';
+                                    ctx.beginPath();
+                                    ctx.moveTo(padding, padding);
+                                    ctx.lineTo(padding, height - padding);
+                                    ctx.lineTo(width - padding, height - padding);
+                                    ctx.stroke();
+                                    
+                                    // Redraw line
+                                    ctx.strokeStyle = '#4F46E5';
+                                    ctx.lineWidth = 2;
+                                    ctx.beginPath();
+                                    data.forEach((p, i) => {
+                                        const px = padding + (width - 2 * padding) * i / (data.length - 1);
+                                        const py = height - padding - ((p.value - minValue) / valueRange) * (height - 2 * padding);
+                                        if (i === 0) ctx.moveTo(px, py);
+                                        else ctx.lineTo(px, py);
+                                    });
+                                    ctx.stroke();
+                                    
+                                    // Highlight point
+                                    ctx.fillStyle = '#4F46E5';
+                                    ctx.beginPath();
+                                    ctx.arc(pointX, pointY, 6, 0, 2 * Math.PI);
+                                    ctx.fill();
+                                    
+                                    // Show tooltip
+                                    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                                    ctx.fillRect(pointX - 60, pointY - 40, 120, 35);
+                                    ctx.fillStyle = 'white';
+                                    ctx.font = '12px sans-serif';
+                                    ctx.textAlign = 'center';
+                                    ctx.fillText(dateFormat(point.date), pointX, pointY - 25);
+                                    // Format volume for tooltip
+                                    let formattedVolume = point.value.toString();
+                                    if (point.value >= 1000000000) formattedVolume = (point.value / 1000000000).toFixed(1) + 'B';
+                                    else if (point.value >= 1000000) formattedVolume = (point.value / 1000000).toFixed(1) + 'M';
+                                    else if (point.value >= 1000) formattedVolume = (point.value / 1000).toFixed(1) + 'K';
+                                    ctx.fillText('Volume: ' + formattedVolume, pointX, pointY - 10);
+                                }
+                            }
+                        };
+                        
+                        canvas.onmouseleave = function() {
+                            // Redraw chart without highlight
+                            setTimeout(() => {
+                                if (canvas && canvas.getContext) {
+                                    const ctx = canvas.getContext('2d');
+                                    ctx.clearRect(0, 0, width, height);
+                                    // Trigger full redraw
+                                    showEntityDetails(entityId, entityName);
+                                }
+                            }, 0);
+                        };
                     }
                 }, 100);
             }
@@ -565,8 +902,10 @@
         dropdowns.forEach(dropdown => {
             const btn = dropdown.querySelector('.dropdown-btn');
             const content = dropdown.querySelector('.dropdown-content');
+            const filterType = dropdown.dataset.filter;
             
             if (btn && content) {
+                // Toggle dropdown
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -580,6 +919,34 @@
                     
                     // Toggle current dropdown
                     dropdown.classList.toggle('active');
+                });
+                
+                // Handle option selection
+                const options = dropdown.querySelectorAll('.dropdown-content a');
+                options.forEach(option => {
+                    option.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const value = this.dataset.value;
+                        const text = this.textContent;
+                        
+                        // Update button text
+                        btn.innerHTML = text + ' <span class="arrow">▼</span>';
+                        
+                        // Update filter
+                        if (value === '') {
+                            currentFilters[filterType] = null;
+                        } else {
+                            currentFilters[filterType] = filterType.includes('min') ? 
+                                parseFloat(value) : value;
+                        }
+                        
+                        // Close dropdown
+                        dropdown.classList.remove('active');
+                        
+                        // Apply filters
+                        applyFilters();
+                    });
                 });
             }
         });
