@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Supabase Connection</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Supabase Connection Debug</h1>
+    <div id="status">Testing connection...</div>
+    <pre id="results"></pre>
+    
+    <script type="module">
+        import { supabase, fetchEntities } from './supabase-client.js';
+        
+        const statusDiv = document.getElementById('status');
+        const resultsDiv = document.getElementById('results');
+        
+        async function testConnection() {
+            try {
+                statusDiv.textContent = 'Fetching entities...';
+                
+                // Test direct query
+                const { data: directData, error: directError } = await supabase
+                    .from('entity_current_status')
+                    .select('*')
+                    .limit(5);
+                
+                if (directError) {
+                    statusDiv.textContent = 'Direct query error!';
+                    resultsDiv.textContent = JSON.stringify(directError, null, 2);
+                } else {
+                    statusDiv.textContent = `Direct query success! Found ${directData.length} entities`;
+                    resultsDiv.textContent = JSON.stringify(directData, null, 2);
+                }
+                
+                // Also test fetchEntities function
+                console.log('Testing fetchEntities...');
+                const entities = await fetchEntities();
+                console.log('fetchEntities result:', entities);
+                
+            } catch (error) {
+                statusDiv.textContent = 'Error!';
+                resultsDiv.textContent = error.toString();
+                console.error('Test error:', error);
+            }
+        }
+        
+        // Run test
+        testConnection();
+        
+        // Also log to console
+        window.supabase = supabase;
+        console.log('Supabase client:', supabase);
+    </script>
+</body>
+</html>

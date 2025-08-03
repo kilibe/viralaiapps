@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Connection Test</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Supabase Connection Test</h1>
+    <div id="results"></div>
+    
+    <script type="module">
+        import { supabase, fetchEntities } from './supabase-client.js';
+        
+        const resultsDiv = document.getElementById('results');
+        
+        async function testConnection() {
+            try {
+                resultsDiv.innerHTML = '<p>Testing connection...</p>';
+                
+                // Test 1: Direct query
+                const { data: testData, error: testError } = await supabase
+                    .from('entity_current_status')
+                    .select('*')
+                    .limit(5);
+                
+                if (testError) {
+                    resultsDiv.innerHTML += `<p style="color: red;">Direct query error: ${testError.message}</p>`;
+                } else {
+                    resultsDiv.innerHTML += `<p style="color: green;">Direct query success! Found ${testData.length} entities</p>`;
+                    resultsDiv.innerHTML += '<pre>' + JSON.stringify(testData, null, 2) + '</pre>';
+                }
+                
+                // Test 2: Using fetchEntities function
+                const entities = await fetchEntities();
+                resultsDiv.innerHTML += `<p style="color: green;">fetchEntities success! Found ${entities.length} entities</p>`;
+                
+            } catch (error) {
+                resultsDiv.innerHTML += `<p style="color: red;">Error: ${error.message}</p>`;
+                console.error('Test error:', error);
+            }
+        }
+        
+        testConnection();
+    </script>
+</body>
+</html>

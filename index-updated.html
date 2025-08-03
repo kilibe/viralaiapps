@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral AI Apps - Trending AI Projects Directory</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* Track button styles */
+        .track-btn {
+            background: none;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 8px;
+            transition: all 0.2s ease;
+        }
+        .track-btn:hover {
+            background-color: #f3f4f6;
+        }
+        .track-btn.tracking {
+            color: #fbbf24;
+            border-color: #fbbf24;
+        }
+        
+        /* Dashboard styles */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .dashboard-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-card h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #1f2937;
+        }
+        
+        .tracked-entity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .tracked-entity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .entity-name {
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .entity-metric {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .growth-badge {
+            background-color: #10b981;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Navigation Bar -->
+        <nav class="sidebar">
+            <div class="sidebar-top">
+                <div class="logo">
+                <div class="logo-icon">
+                    <svg width="80" height="80" viewBox="0 0 416 416" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="208" cy="208" r="144" fill="#FF4500"/>
+                        <circle cx="208" cy="24" r="24" fill="#FF4500"/>
+                        <circle cx="208" cy="392" r="24" fill="#FF4500"/>
+                        <circle cx="24" cy="208" r="24" fill="#FF4500"/>
+                        <circle cx="392" cy="208" r="24" fill="#FF4500"/>
+                        <circle cx="88" cy="88" r="20" fill="#FF4500"/>
+                        <circle cx="328" cy="88" r="20" fill="#FF4500"/>
+                        <circle cx="88" cy="328" r="20" fill="#FF4500"/>
+                        <circle cx="328" cy="328" r="20" fill="#FF4500"/>
+                        <circle cx="136" cy="168" r="16" fill="white"/>
+                        <circle cx="280" cy="168" r="16" fill="white"/>
+                        <path d="M168 264C168 264 188 304 208 304C228 304 248 264 248 264" stroke="white" stroke-width="12" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-line1">viralai</div>
+                    <div class="logo-line2">apps.com</div>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-item active">Home</a></li>
+                <li><a href="#tracking" class="nav-item" style="display: none;">Tracking</a></li>
+                <li><a href="#insights" class="nav-item">Insights</a></li>
+                <li><a href="#compare" class="nav-item">Compare</a></li>
+                <li><a href="#reports" class="nav-item">Reports</a></li>
+                <li><a href="#api" class="nav-item">API</a></li>
+            </ul>
+            </div>
+            
+            <div class="nav-footer">
+                <a href="#cookie" class="nav-icon" title="Cookie Policy">🍪</a>
+                <a href="#legal" class="nav-icon" title="Legal">⚖️</a>
+                <a href="#contact" class="nav-icon" title="Contact Us">👤</a>
+                <a href="#settings" class="nav-icon" title="Settings">⚙️</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="page-header">
+                <h1>Trending AI Startups</h1>
+                <p>Discover the fastest-growing AI projects and applications</p>
+            </header>
+
+            <!-- Main content sections -->
+            <div id="home-content">
+                <!-- Filters Section -->
+                <div class="filters-section">
+                    <div class="filter-group">
+                        <div class="dropdown">
+                            <button class="dropdown-btn">
+                                Time frame <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="#">Last 7 days</a>
+                                <a href="#">Last 30 days</a>
+                                <a href="#">Last 3 months</a>
+                                <a href="#">Last 6 months</a>
+                                <a href="#">Last 12 months</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="dropdown-btn">
+                                Category <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="#">All Categories</a>
+                                <a href="#" class="category-teal">General chatbots</a>
+                                <a href="#" class="category-teal">Writing</a>
+                                <a href="#" class="category-teal">Research</a>
+                                <a href="#" class="category-teal">Browser</a>
+                                <a href="#" class="category-teal">Translation</a>
+                                <a href="#" class="category-teal">Reader</a>
+                                <a href="#" class="category-orange">Image gen</a>
+                                <a href="#" class="category-orange">Video gen</a>
+                                <a href="#" class="category-orange">Voice gen</a>
+                                <a href="#" class="category-orange">Avatar gen</a>
+                                <a href="#" class="category-navy">Workflow</a>
+                                <a href="#" class="category-navy">Office tools & productivity</a>
+                                <a href="#" class="category-navy">Prompts</a>
+                                <a href="#" class="category-navy">Memory</a>
+                                <a href="#" class="category-navy">Organize</a>
+                                <a href="#" class="category-dark">Build & code</a>
+                                <a href="#" class="category-dark">Design & UI</a>
+                                <a href="#" class="category-bronze">Marketing & SEO</a>
+                                <a href="#" class="category-bronze">Sales & CRM</a>
+                                <a href="#" class="category-maroon">Companion</a>
+                                <a href="#" class="category-maroon">Music</a>
+                                <a href="#" class="category-maroon">Finance</a>
+                                <a href="#" class="category-maroon">Mobile</a>
+                                <a href="#" class="category-maroon">Architect</a>
+                                <a href="#" class="category-slate">LLMs</a>
+                                <a href="#" class="category-slate">Training</a>
+                                <a href="#" class="category-slate">Benchmark</a>
+                                <a href="#" class="category-slate">APIs</a>
+                                <a href="#" class="category-slate">Enterprise</a>
+                                <a href="#" class="category-slate">Security</a>
+                                <a href="#" class="category-slate">Health</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="dropdown-btn">
+                                Growth <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="#">Any Growth</a>
+                                <a href="#">100%+</a>
+                                <a href="#">500%+</a>
+                                <a href="#">1000%+</a>
+                                <a href="#">5000%+</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="dropdown-btn">
+                                Volume <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="#">Any Volume</a>
+                                <a href="#">1K+ users</a>
+                                <a href="#">10K+ users</a>
+                                <a href="#">100K+ users</a>
+                                <a href="#">1M+ users</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="dropdown-btn">
+                                Total funding <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="#">Any Funding</a>
+                                <a href="#">$1M+</a>
+                                <a href="#">$10M+</a>
+                                <a href="#">$50M+</a>
+                                <a href="#">$100M+</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="dropdown-btn">
+                                Latest round <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="#">Any Round</a>
+                                <a href="#">Seed</a>
+                                <a href="#">Series A</a>
+                                <a href="#">Series B</a>
+                                <a href="#">Series C+</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Table -->
+                <div class="table-container">
+                    <table class="content-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Growth</th>
+                                <th>Volume</th>
+                                <th>Total Funding</th>
+                                <th>Latest Round</th>
+                            </tr>
+                        </thead>
+                        <tbody id="entities-tbody">
+                            <!-- Dynamic content will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tracking Dashboard (hidden by default) -->
+            <div id="tracking-content" style="display: none;">
+                <div class="dashboard-container">
+                    <div class="dashboard-card">
+                        <h3>Your Tracked AI Apps</h3>
+                        <div id="tracked-entities-list">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Recent Alerts</h3>
+                        <div id="alerts-list">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insights Content (hidden by default) -->
+            <div id="insights-content" style="display: none;">
+                <div class="dashboard-container">
+                    <div class="dashboard-card">
+                        <h3>Category Breakdown</h3>
+                        <div id="category-chart"></div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Growth Heatmap</h3>
+                        <div id="growth-heatmap"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compare Content (hidden by default) -->
+            <div id="compare-content" style="display: none;">
+                <div class="dashboard-card">
+                    <h3>Compare AI Apps</h3>
+                    <p>Select multiple AI apps from the main table to compare their growth trends.</p>
+                    <div id="comparison-chart"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Container -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="chart.js"></script>
+    <script src="charts-advanced.js"></script>
+    <script type="module">
+        // Import all modules
+        import { supabase, fetchEntities, fetchEntityMetrics, formatNumber, formatGrowth, formatFunding } from './supabase-client.js';
+        import { authManager, updateAuthUI } from './auth-manager.js';
+        
+        // Make them available globally
+        window.supabase = supabase;
+        window.fetchEntities = fetchEntities;
+        window.fetchEntityMetrics = fetchEntityMetrics;
+        window.formatNumber = formatNumber;
+        window.formatGrowth = formatGrowth;
+        window.formatFunding = formatFunding;
+        window.authManager = authManager;
+        window.updateAuthUI = updateAuthUI;
+        
+        // Initialize app
+        import('./script-updated.js');
+    </script>
+</body>
+</html>

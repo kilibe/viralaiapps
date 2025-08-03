@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Test</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 20px;
+        }
+
+        .dropdown-btn {
+            background-color: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            min-width: 220px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            z-index: 1000;
+            margin-top: 4px;
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #374151;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dropdown Test</h1>
+    
+    <div class="dropdown">
+        <button class="dropdown-btn">
+            Click Me ▼
+        </button>
+        <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdown = document.querySelector('.dropdown');
+            const btn = dropdown.querySelector('.dropdown-btn');
+            
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                dropdown.classList.toggle('active');
+                console.log('Dropdown clicked, active:', dropdown.classList.contains('active'));
+            });
+            
+            // Test that JavaScript is running
+            console.log('JavaScript is working!');
+        });
+    </script>
+</body>
+</html>
