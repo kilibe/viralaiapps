@@ -283,5 +283,62 @@
     <script type="module" src="supabase-client.js"></script>
     <script type="module" src="script-updated.js"></script>
     <script src="detail-page.js"></script>
+    
+    <!-- Fallback inline script to ensure data loads -->
+    <script type="module">
+        import { createClient } from 'https://unpkg.com/@supabase/supabase-js@2';
+        
+        // Wait a bit for other scripts to load
+        setTimeout(async () => {
+            console.log('Fallback script running...');
+            
+            // Check if data is already loaded
+            const tbody = document.querySelector('.content-table tbody');
+            if (tbody && tbody.children.length > 0 && !tbody.innerHTML.includes('Loading')) {
+                console.log('Data already loaded, skipping fallback');
+                return;
+            }
+            
+            console.log('Loading data with fallback script...');
+            
+            // Initialize Supabase
+            const supabaseUrl = 'https://rygermxpngibrkvmpqqf.supabase.co';
+            const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5Z2VybXhwbmdpYnJrdm1wcXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNTYxNTIsImV4cCI6MjA2OTczMjE1Mn0.Stvxenw41DlbxmmW2plGWKePmMs6VHGu6KOVcBCMaJ8';
+            const supabase = createClient(supabaseUrl, supabaseAnonKey);
+            
+            try {
+                // Fetch entities
+                const { data: entities, error } = await supabase
+                    .from('entities')
+                    .select('*');
+                    
+                if (error) throw error;
+                
+                console.log('Fallback loaded entities:', entities);
+                
+                // Update table
+                if (entities && entities.length > 0) {
+                    tbody.innerHTML = entities.map(entity => `
+                        <tr class="clickable-row" data-entity-id="${entity.id}" data-entity-name="${entity.name}">
+                            <td>
+                                <div class="app-info">
+                                    <strong>${entity.name}</strong>
+                                    <div class="app-description">${entity.short_description || ''}</div>
+                                </div>
+                            </td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td><span class="category-slate">${Array.isArray(entity.category) ? entity.category[0] : 'AI'}</span></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error('Fallback error:', err);
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">Error: ${err.message}</td></tr>`;
+            }
+        }, 2000);
+    </script>
 </body>
 </html>
