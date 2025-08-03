@@ -8,30 +8,35 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Data fetching functions
 export async function fetchEntities(filters = {}) {
+  // Query entities table directly with a join
   let query = supabase
-    .from('entity_current_status')
-    .select('*')
-    .order('total_virality', { ascending: false })
+    .from('entities')
+    .select(`
+      *,
+      funding_rounds!left(
+        amount,
+        round_type,
+        announced_date
+      ),
+      virality_indicators!left(
+        growth_rate_7d,
+        growth_rate_30d,
+        indicator_date
+      )
+    `)
+    .order('created_at', { ascending: false })
 
   // Apply filters
   if (filters.category && filters.category !== 'All Categories') {
-    query = query.eq('category', filters.category)
+    query = query.contains('category', [filters.category])
   }
 
   if (filters.minGrowth) {
-    query = query.gte('growth_rate_30d', filters.minGrowth)
+    query = query.gte('virality_indicators.growth_rate_30d', filters.minGrowth)
   }
 
   if (filters.minVolume) {
     query = query.gte('volume', filters.minVolume)
-  }
-
-  if (filters.minFunding) {
-    query = query.gte('latest_funding_amount', filters.minFunding)
-  }
-
-  if (filters.roundType) {
-    query = query.eq('latest_round_type', filters.roundType)
   }
 
   const { data, error } = await query
@@ -41,7 +46,39 @@ export async function fetchEntities(filters = {}) {
     return []
   }
 
-  return data
+  // Transform the data to match expected format
+  const transformedData = data.map(entity => {
+    // Get latest funding round
+    const latestFunding = entity.funding_rounds?.sort((a, b) => 
+      new Date(b.announced_date) - new Date(a.announced_date)
+    )[0]
+    
+    // Get latest virality indicators
+    const latestIndicators = entity.virality_indicators?.sort((a, b) => 
+      new Date(b.indicator_date) - new Date(a.indicator_date)
+    )[0]
+    
+    return {
+      ...entity,
+      latest_funding_amount: latestFunding?.amount || null,
+      latest_round_type: latestFunding?.round_type || null,
+      growth_rate_7d: latestIndicators?.growth_rate_7d || null,
+      growth_rate_30d: latestIndicators?.growth_rate_30d || null,
+      // Calculate total virality score
+      total_virality: calculateViralityScore(entity.volume, latestIndicators?.growth_rate_30d)
+    }
+  })
+
+  // Sort by virality score
+  return transformedData.sort((a, b) => (b.total_virality || 0) - (a.total_virality || 0))
+}
+
+// Calculate virality score
+function calculateViralityScore(volume, growthRate) {
+  if (!volume || !growthRate) return 0
+  const v = parseFloat(volume) || 0
+  const g = parseFloat(growthRate) || 0
+  return Math.log10(v + 1) * Math.log10(g + 1) * 10
 }
 
 export async function fetchEntityMetrics(entityId, timeRange = '5 years') {
