@@ -449,42 +449,150 @@ function getContactModalContent() {
 }
 
 function getSettingsModalContent() {
+    // Check if user is already logged in
+    const currentUser = getCurrentUser();
+    
+    if (currentUser) {
+        return getUserDashboardContent(currentUser);
+    } else {
+        return getAuthFormContent();
+    }
+}
+
+function getAuthFormContent() {
     return `
-        <div class="modal-header" style="border-bottom: 1px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 24px;">
-            <h2 style="color: #2d3748; margin: 0; display: flex; align-items: center; gap: 8px;">
-                ⚙️ Settings
-            </h2>
+        <div class="auth-container" style="max-width: 400px; margin: 0 auto;">
+            <div class="auth-header" style="text-align: center; margin-bottom: 32px;">
+                <div style="width: 60px; height: 60px; background: #FF4500; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                    <span style="color: white; font-size: 24px;">⚙️</span>
+                </div>
+                <h2 style="color: #1f2937; margin: 0 0 8px 0; font-size: 24px;">Welcome to Viral AI Apps</h2>
+                <p style="color: #6b7280; margin: 0; font-size: 14px;">Sign in to your account or create a new one</p>
+            </div>
+            
+            <div class="auth-tabs" style="display: flex; margin-bottom: 24px; background: #f8f9fa; border-radius: 8px; padding: 4px;">
+                <button onclick="switchAuthTab('signin')" id="signinTab" class="auth-tab active-tab" style="flex: 1; padding: 10px; background: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; color: #1f2937; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">Sign In</button>
+                <button onclick="switchAuthTab('signup')" id="signupTab" class="auth-tab" style="flex: 1; padding: 10px; background: transparent; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; color: #6b7280;">Sign Up</button>
+            </div>
+            
+            <!-- Sign In Form -->
+            <form id="signinForm" class="auth-form" style="display: block;">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; color: #374151; font-weight: 500; margin-bottom: 6px; font-size: 14px;">Email</label>
+                    <input type="email" id="signinEmail" placeholder="Enter your email" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 24px;">
+                    <label style="display: block; color: #374151; font-weight: 500; margin-bottom: 6px; font-size: 14px;">Password</label>
+                    <input type="password" id="signinPassword" placeholder="Enter your password" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" required>
+                </div>
+                <button type="submit" onclick="handleSignIn(event)" style="width: 100%; padding: 12px; background: #FF4500; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; margin-bottom: 16px;">Sign In</button>
+                <div style="text-align: center;">
+                    <a href="#" onclick="showForgotPassword()" style="color: #FF4500; text-decoration: none; font-size: 14px;">Forgot your password?</a>
+                </div>
+            </form>
+            
+            <!-- Sign Up Form -->
+            <form id="signupForm" class="auth-form" style="display: none;">
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="display: block; color: #374151; font-weight: 500; margin-bottom: 6px; font-size: 14px;">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="display: block; color: #374151; font-weight: 500; margin-bottom: 6px; font-size: 14px;">Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="display: block; color: #374151; font-weight: 500; margin-bottom: 6px; font-size: 14px;">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; color: #374151; font-weight: 500; margin-bottom: 6px; font-size: 14px;">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" placeholder="Confirm your password" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" required>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: flex; align-items: center; gap: 8px; color: #374151; font-size: 14px; cursor: pointer;">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span>I agree to the <a href="#" onclick="showLegalModal()" style="color: #FF4500; text-decoration: none;">Terms of Service</a> and <a href="#" onclick="showLegalModal()" style="color: #FF4500; text-decoration: none;">Privacy Policy</a></span>
+                    </label>
+                </div>
+                <button type="submit" onclick="handleSignUp(event)" style="width: 100%; padding: 12px; background: #FF4500; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer;">Create Account</button>
+            </form>
+            
+            <div class="auth-divider" style="margin: 24px 0; text-align: center; position: relative;">
+                <span style="background: white; padding: 0 16px; color: #6b7280; font-size: 14px;">or</span>
+                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e5e7eb; z-index: -1;"></div>
+            </div>
+            
+            <button onclick="handleGoogleSignIn()" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; background: white; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Continue with Google
+            </button>
         </div>
-        <div class="settings-content">
-            <div class="setting-group" style="margin-bottom: 24px;">
-                <h4 style="color: #2d3748; margin-bottom: 12px;">🌙 Display</h4>
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <label style="color: #4a5568; font-size: 14px;">Theme:</label>
-                    <select style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; background: white;">
-                        <option>Light</option>
-                        <option>Dark</option>
-                        <option>Auto</option>
-                    </select>
+    `;
+}
+
+function getUserDashboardContent(user) {
+    return `
+        <div class="user-dashboard" style="max-width: 500px; margin: 0 auto;">
+            <div class="dashboard-header" style="text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e5e7eb;">
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #FF4500, #FF6B35); border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; font-weight: bold;">
+                    ${user.user_metadata?.full_name ? user.user_metadata.full_name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+                </div>
+                <h2 style="color: #1f2937; margin: 0 0 4px 0; font-size: 24px;">Welcome back!</h2>
+                <p style="color: #6b7280; margin: 0; font-size: 14px;">${user.user_metadata?.full_name || user.email}</p>
+                <p style="color: #9ca3af; margin: 4px 0 0 0; font-size: 12px;">${user.email}</p>
+            </div>
+            
+            <div class="user-preferences" style="margin-bottom: 32px;">
+                <h3 style="color: #1f2937; margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">Your Preferences</h3>
+                
+                <div class="setting-group" style="background: #f8f9fa; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                    <h4 style="color: #374151; margin: 0 0 16px 0; font-size: 16px; font-weight: 500; display: flex; align-items: center; gap: 8px;">
+                        🌙 Display Settings
+                    </h4>
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <label style="color: #4b5563; font-size: 14px;">Theme:</label>
+                        <select id="userTheme" onchange="saveUserPreference('theme', this.value)" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-size: 14px;">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                            <option value="auto">Auto</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="setting-group" style="background: #f8f9fa; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                    <h4 style="color: #374151; margin: 0 0 16px 0; font-size: 16px; font-weight: 500; display: flex; align-items: center; gap: 8px;">
+                        📊 Data Preferences
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label style="display: flex; align-items: center; gap: 12px; color: #4b5563; font-size: 14px; cursor: pointer;">
+                            <input type="checkbox" id="showGrowth" onchange="saveUserPreference('showGrowth', this.checked)" checked style="width: 16px; height: 16px;">
+                            <span>Show growth percentages</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 12px; color: #4b5563; font-size: 14px; cursor: pointer;">
+                            <input type="checkbox" id="showFunding" onchange="saveUserPreference('showFunding', this.checked)" checked style="width: 16px; height: 16px;">
+                            <span>Display funding information</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 12px; color: #4b5563; font-size: 14px; cursor: pointer;">
+                            <input type="checkbox" id="autoRefresh" onchange="saveUserPreference('autoRefresh', this.checked)" style="width: 16px; height: 16px;">
+                            <span>Enable auto-refresh</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 12px; color: #4b5563; font-size: 14px; cursor: pointer;">
+                            <input type="checkbox" id="emailNotifications" onchange="saveUserPreference('emailNotifications', this.checked)" style="width: 16px; height: 16px;">
+                            <span>Receive email notifications</span>
+                        </label>
+                    </div>
                 </div>
             </div>
             
-            <div class="setting-group" style="margin-bottom: 24px;">
-                <h4 style="color: #2d3748; margin-bottom: 12px;">📊 Data</h4>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <label style="display: flex; align-items: center; gap: 8px; color: #4a5568; font-size: 14px;">
-                        <input type="checkbox" checked> Show growth percentages
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px; color: #4a5568; font-size: 14px;">
-                        <input type="checkbox" checked> Display funding information
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px; color: #4a5568; font-size: 14px;">
-                        <input type="checkbox"> Enable auto-refresh
-                    </label>
-                </div>
-            </div>
-            
-            <div style="padding: 16px; background: #f8f9fa; border-radius: 8px;">
-                <p style="color: #718096; margin: 0; font-size: 14px;">Settings are saved automatically and synced across your devices.</p>
+            <div class="user-actions" style="display: flex; gap: 12px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+                <button onclick="handleSignOut()" style="flex: 1; padding: 12px; border: 1px solid #d1d5db; background: white; color: #374151; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;">Sign Out</button>
+                <button onclick="showAccountSettings()" style="flex: 1; padding: 12px; background: #FF4500; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;">Account Settings</button>
             </div>
         </div>
     `;
@@ -740,9 +848,456 @@ function showContactConfirmation(message) {
     }, 5000);
 }
 
+// Authentication and user management functions
+let currentUser = null;
+let supabaseClient = null;
+
+// Initialize Supabase client
+function initializeSupabase() {
+    try {
+        if (window.supabase && window.supabase.createClient) {
+            supabaseClient = window.supabase.createClient(
+                'https://rygermxpngibrkvmpqqf.supabase.co', // Replace with your Supabase URL
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5Z2VybXhwbmdpYnJrdm1wcXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNTYxNTIsImV4cCI6MjA2OTczMjE1Mn0.Stvxenw41DlbxmmW2plGWKePmMs6VHGu6KOVcBCMaJ8' // Replace with your Supabase anon key
+            );
+            console.log('Supabase client initialized');
+            checkUserSession();
+        } else {
+            console.warn('Supabase not available');
+        }
+    } catch (error) {
+        console.error('Error initializing Supabase:', error);
+    }
+}
+
+function getCurrentUser() {
+    return currentUser;
+}
+
+async function checkUserSession() {
+    if (!supabaseClient) return null;
+    
+    try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session?.user) {
+            currentUser = session.user;
+            console.log('User session found:', currentUser.email);
+            await loadUserPreferences();
+        }
+        return currentUser;
+    } catch (error) {
+        console.error('Error checking user session:', error);
+        return null;
+    }
+}
+
+// Authentication form functions
+function switchAuthTab(tab) {
+    const signinForm = document.getElementById('signinForm');
+    const signupForm = document.getElementById('signupForm');
+    const signinTab = document.getElementById('signinTab');
+    const signupTab = document.getElementById('signupTab');
+    
+    if (tab === 'signin') {
+        signinForm.style.display = 'block';
+        signupForm.style.display = 'none';
+        signinTab.className = 'auth-tab active-tab';
+        signinTab.style.background = 'white';
+        signinTab.style.color = '#1f2937';
+        signinTab.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        signupTab.className = 'auth-tab';
+        signupTab.style.background = 'transparent';
+        signupTab.style.color = '#6b7280';
+        signupTab.style.boxShadow = 'none';
+    } else {
+        signinForm.style.display = 'none';
+        signupForm.style.display = 'block';
+        signupTab.className = 'auth-tab active-tab';
+        signupTab.style.background = 'white';
+        signupTab.style.color = '#1f2937';
+        signupTab.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        signinTab.className = 'auth-tab';
+        signinTab.style.background = 'transparent';
+        signinTab.style.color = '#6b7280';
+        signinTab.style.boxShadow = 'none';
+    }
+}
+
+async function handleSignIn(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('signinEmail').value.trim();
+    const password = document.getElementById('signinPassword').value;
+    
+    if (!email || !password) {
+        showAuthError('Please fill in all fields');
+        return;
+    }
+    
+    if (!supabaseClient) {
+        showAuthError('Authentication service not available');
+        return;
+    }
+    
+    try {
+        showAuthLoading('Signing in...');
+        
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+        
+        if (error) {
+            showAuthError(error.message);
+            return;
+        }
+        
+        currentUser = data.user;
+        showAuthSuccess('Welcome back!');
+        await loadUserPreferences();
+        
+        // Refresh the modal content to show dashboard
+        setTimeout(() => {
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = getUserDashboardContent(currentUser);
+            hideAuthLoading();
+        }, 1000);
+        
+    } catch (error) {
+        console.error('Sign in error:', error);
+        showAuthError('An unexpected error occurred');
+        hideAuthLoading();
+    }
+}
+
+async function handleSignUp(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('signupConfirmPassword').value;
+    const agreeTerms = document.getElementById('agreeTerms').checked;
+    
+    // Validation
+    if (!name || !email || !password || !confirmPassword) {
+        showAuthError('Please fill in all fields');
+        return;
+    }
+    
+    if (password !== confirmPassword) {
+        showAuthError('Passwords do not match');
+        return;
+    }
+    
+    if (password.length < 6) {
+        showAuthError('Password must be at least 6 characters');
+        return;
+    }
+    
+    if (!agreeTerms) {
+        showAuthError('Please agree to the Terms of Service');
+        return;
+    }
+    
+    if (!supabaseClient) {
+        showAuthError('Authentication service not available');
+        return;
+    }
+    
+    try {
+        showAuthLoading('Creating your account...');
+        
+        const { data, error } = await supabaseClient.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    full_name: name
+                }
+            }
+        });
+        
+        if (error) {
+            showAuthError(error.message);
+            return;
+        }
+        
+        if (data.user && !data.session) {
+            showAuthSuccess('Please check your email to confirm your account');
+        } else {
+            currentUser = data.user;
+            showAuthSuccess('Account created successfully!');
+            await createUserProfile(data.user, name);
+            
+            // Refresh the modal content to show dashboard
+            setTimeout(() => {
+                const modalBody = document.getElementById('modalBody');
+                modalBody.innerHTML = getUserDashboardContent(currentUser);
+                hideAuthLoading();
+            }, 1000);
+        }
+        
+    } catch (error) {
+        console.error('Sign up error:', error);
+        showAuthError('An unexpected error occurred');
+        hideAuthLoading();
+    }
+}
+
+async function handleGoogleSignIn() {
+    if (!supabaseClient) {
+        showAuthError('Authentication service not available');
+        return;
+    }
+    
+    try {
+        showAuthLoading('Redirecting to Google...');
+        
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: window.location.origin
+            }
+        });
+        
+        if (error) {
+            showAuthError(error.message);
+            hideAuthLoading();
+        }
+        
+    } catch (error) {
+        console.error('Google sign in error:', error);
+        showAuthError('An unexpected error occurred');
+        hideAuthLoading();
+    }
+}
+
+async function handleSignOut() {
+    if (!supabaseClient) return;
+    
+    try {
+        const { error } = await supabaseClient.auth.signOut();
+        if (error) {
+            console.error('Sign out error:', error);
+            return;
+        }
+        
+        currentUser = null;
+        showAuthSuccess('Signed out successfully');
+        
+        // Refresh the modal content to show login form
+        setTimeout(() => {
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = getAuthFormContent();
+        }, 1000);
+        
+    } catch (error) {
+        console.error('Sign out error:', error);
+    }
+}
+
+async function createUserProfile(user, fullName) {
+    if (!supabaseClient) return;
+    
+    try {
+        const { error } = await supabaseClient
+            .from('user_profiles')
+            .insert([
+                {
+                    id: user.id,
+                    email: user.email,
+                    full_name: fullName,
+                    preferences: {
+                        theme: 'light',
+                        showGrowth: true,
+                        showFunding: true,
+                        autoRefresh: false,
+                        emailNotifications: false
+                    },
+                    created_at: new Date().toISOString()
+                }
+            ]);
+        
+        if (error) {
+            console.error('Error creating user profile:', error);
+        } else {
+            console.log('User profile created successfully');
+        }
+    } catch (error) {
+        console.error('Error creating user profile:', error);
+    }
+}
+
+async function loadUserPreferences() {
+    if (!supabaseClient || !currentUser) return;
+    
+    try {
+        const { data, error } = await supabaseClient
+            .from('user_profiles')
+            .select('preferences')
+            .eq('id', currentUser.id)
+            .single();
+        
+        if (error) {
+            console.error('Error loading user preferences:', error);
+            return;
+        }
+        
+        if (data?.preferences) {
+            // Apply preferences to the UI
+            applyUserPreferences(data.preferences);
+        }
+    } catch (error) {
+        console.error('Error loading user preferences:', error);
+    }
+}
+
+async function saveUserPreference(key, value) {
+    if (!supabaseClient || !currentUser) return;
+    
+    try {
+        const { error } = await supabaseClient
+            .from('user_profiles')
+            .update({
+                [`preferences->${key}`]: value
+            })
+            .eq('id', currentUser.id);
+        
+        if (error) {
+            console.error('Error saving user preference:', error);
+        } else {
+            console.log(`Preference ${key} saved:`, value);
+            showAuthSuccess('Preference saved');
+        }
+    } catch (error) {
+        console.error('Error saving user preference:', error);
+    }
+}
+
+function applyUserPreferences(preferences) {
+    // Apply theme
+    if (preferences.theme) {
+        const themeSelect = document.getElementById('userTheme');
+        if (themeSelect) themeSelect.value = preferences.theme;
+    }
+    
+    // Apply checkboxes
+    const checkboxes = ['showGrowth', 'showFunding', 'autoRefresh', 'emailNotifications'];
+    checkboxes.forEach(key => {
+        const checkbox = document.getElementById(key);
+        if (checkbox && preferences.hasOwnProperty(key)) {
+            checkbox.checked = preferences[key];
+        }
+    });
+}
+
+// UI helper functions
+function showAuthError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #dc2626;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        z-index: 10002;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    `;
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+    
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 4000);
+}
+
+function showAuthSuccess(message) {
+    const successDiv = document.createElement('div');
+    successDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #16a34a;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        z-index: 10002;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    `;
+    successDiv.textContent = message;
+    document.body.appendChild(successDiv);
+    
+    setTimeout(() => {
+        successDiv.remove();
+    }, 3000);
+}
+
+function showAuthLoading(message) {
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'authLoading';
+    loadingDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #3b82f6;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        z-index: 10002;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    `;
+    loadingDiv.textContent = message;
+    document.body.appendChild(loadingDiv);
+}
+
+function hideAuthLoading() {
+    const loadingDiv = document.getElementById('authLoading');
+    if (loadingDiv) {
+        loadingDiv.remove();
+    }
+}
+
+function showForgotPassword() {
+    // Placeholder for forgot password functionality
+    showAuthError('Forgot password feature coming soon. Please contact Jack@IHaveMy.ai for assistance.');
+}
+
+function showLegalModal() {
+    closeModal();
+    setTimeout(() => {
+        showEmojiModal('legal', 'Legal Information');
+    }, 300);
+}
+
+function showAccountSettings() {
+    showAuthError('Account settings coming soon');
+}
+
+// Initialize authentication when DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        initializeSupabase();
+    }, 1000);
+});
+
 // Make functions available globally for onclick handlers
 window.toggleCookie = toggleCookie;
 window.acceptAllCookies = acceptAllCookies;
 window.rejectAllCookies = rejectAllCookies;
 window.acceptSelectedCookies = acceptSelectedCookies;
 window.sendContactMessage = sendContactMessage;
+window.switchAuthTab = switchAuthTab;
+window.handleSignIn = handleSignIn;
+window.handleSignUp = handleSignUp;
+window.handleGoogleSignIn = handleGoogleSignIn;
+window.handleSignOut = handleSignOut;
+window.saveUserPreference = saveUserPreference;
+window.showForgotPassword = showForgotPassword;
+window.showLegalModal = showLegalModal;
+window.showAccountSettings = showAccountSettings;
