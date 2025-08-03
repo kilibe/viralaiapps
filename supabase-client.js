@@ -6,71 +6,113 @@ const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
+// Test the connection
+console.log('Supabase URL:', supabaseUrl)
+console.log('Supabase initialized:', supabase)
+
 // Data fetching functions
 export async function fetchEntities(filters = {}) {
-  // Query entities table directly with a join
-  let query = supabase
-    .from('entities')
-    .select(`
-      *,
-      funding_rounds!left(
-        amount,
-        round_type,
-        announced_date
-      ),
-      virality_indicators!left(
-        growth_rate_7d,
-        growth_rate_30d,
-        indicator_date
-      )
-    `)
-    .order('created_at', { ascending: false })
-
-  // Apply filters
-  if (filters.category && filters.category !== 'All Categories') {
-    query = query.contains('category', [filters.category])
-  }
-
-  if (filters.minGrowth) {
-    query = query.gte('virality_indicators.growth_rate_30d', filters.minGrowth)
-  }
-
-  if (filters.minVolume) {
-    query = query.gte('volume', filters.minVolume)
-  }
-
-  const { data, error } = await query
-
-  if (error) {
-    console.error('Error fetching entities:', error)
+  console.log('fetchEntities called with filters:', filters)
+  
+  try {
+    // First, get all entities
+    const { data: entities, error: entitiesError } = await supabase
+      .from('entities')
+      .select('*')
+    
+    if (entitiesError) {
+      console.error('Error fetching entities:', entitiesError)
+      return []
+    }
+    
+    console.log(`Fetched ${entities.length} entities`)
+    
+    // Get metrics for all entities
+    const entityIds = entities.map(e => e.id)
+    
+    // Fetch daily metrics
+    const { data: metrics, error: metricsError } = await supabase
+      .from('daily_metrics')
+      .select('entity_id, volume, metric_date')
+      .in('entity_id', entityIds)
+      .order('metric_date', { ascending: false })
+    
+    if (metricsError) {
+      console.error('Error fetching metrics:', metricsError)
+    }
+    
+    // Fetch virality indicators
+    const { data: indicators, error: indicatorsError } = await supabase
+      .from('virality_indicators')
+      .select('entity_id, growth_rate_7d, growth_rate_30d, indicator_date')
+      .in('entity_id', entityIds)
+      .order('indicator_date', { ascending: false })
+    
+    if (indicatorsError) {
+      console.error('Error fetching indicators:', indicatorsError)
+    }
+    
+    // Fetch funding rounds
+    const { data: funding, error: fundingError } = await supabase
+      .from('funding_rounds')
+      .select('entity_id, amount, round_type, announced_date')
+      .in('entity_id', entityIds)
+      .order('announced_date', { ascending: false })
+    
+    if (fundingError) {
+      console.error('Error fetching funding:', fundingError)
+    }
+    
+    // Group data by entity
+    const metricsMap = {}
+    const indicatorsMap = {}
+    const fundingMap = {}
+    
+    metrics?.forEach(m => {
+      if (!metricsMap[m.entity_id] || new Date(m.metric_date) > new Date(metricsMap[m.entity_id].metric_date)) {
+        metricsMap[m.entity_id] = m
+      }
+    })
+    
+    indicators?.forEach(i => {
+      if (!indicatorsMap[i.entity_id] || new Date(i.indicator_date) > new Date(indicatorsMap[i.entity_id].indicator_date)) {
+        indicatorsMap[i.entity_id] = i
+      }
+    })
+    
+    funding?.forEach(f => {
+      if (!fundingMap[f.entity_id] || new Date(f.announced_date) > new Date(fundingMap[f.entity_id].announced_date)) {
+        fundingMap[f.entity_id] = f
+      }
+    })
+    
+    // Combine all data
+    const combinedData = entities.map(entity => {
+      const latestMetric = metricsMap[entity.id] || {}
+      const latestIndicator = indicatorsMap[entity.id] || {}
+      const latestFunding = fundingMap[entity.id] || {}
+      
+      return {
+        ...entity,
+        volume: latestMetric.volume || 0,
+        growth_rate_7d: latestIndicator.growth_rate_7d || 0,
+        growth_rate_30d: latestIndicator.growth_rate_30d || 0,
+        latest_funding_amount: latestFunding.amount || null,
+        latest_round_type: latestFunding.round_type || null,
+        total_virality: calculateViralityScore(latestMetric.volume, latestIndicator.growth_rate_30d)
+      }
+    })
+    
+    // Sort by virality score
+    combinedData.sort((a, b) => (b.total_virality || 0) - (a.total_virality || 0))
+    
+    console.log('Combined data:', combinedData)
+    return combinedData
+    
+  } catch (error) {
+    console.error('Error in fetchEntities:', error)
     return []
   }
-
-  // Transform the data to match expected format
-  const transformedData = data.map(entity => {
-    // Get latest funding round
-    const latestFunding = entity.funding_rounds?.sort((a, b) => 
-      new Date(b.announced_date) - new Date(a.announced_date)
-    )[0]
-    
-    // Get latest virality indicators
-    const latestIndicators = entity.virality_indicators?.sort((a, b) => 
-      new Date(b.indicator_date) - new Date(a.indicator_date)
-    )[0]
-    
-    return {
-      ...entity,
-      latest_funding_amount: latestFunding?.amount || null,
-      latest_round_type: latestFunding?.round_type || null,
-      growth_rate_7d: latestIndicators?.growth_rate_7d || null,
-      growth_rate_30d: latestIndicators?.growth_rate_30d || null,
-      // Calculate total virality score
-      total_virality: calculateViralityScore(entity.volume, latestIndicators?.growth_rate_30d)
-    }
-  })
-
-  // Sort by virality score
-  return transformedData.sort((a, b) => (b.total_virality || 0) - (a.total_virality || 0))
 }
 
 // Calculate virality score
@@ -139,6 +181,7 @@ export async function fetchEntityForecasts(entityId, metricType = 'total') {
 
 // Function to format large numbers
 export function formatNumber(num) {
+  if (!num) return '0'
   if (num >= 1000000000) {
     return (num / 1000000000).toFixed(1) + 'B'
   } else if (num >= 1000000) {

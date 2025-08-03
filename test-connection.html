@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Connection</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Testing Supabase Connection</h1>
+    <div id="results"></div>
+    
+    <script>
+        const supabaseUrl = 'https://rygermxpngibrkvmpqqf.supabase.co'
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5Z2VybXhwbmdpYnJrdm1wcXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNTYxNTIsImV4cCI6MjA2OTczMjE1Mn0.Stvxenw41DlbxmmW2plGWKePmMs6VHGu6KOVcBCMaJ8'
+        
+        async function testConnection() {
+            const results = document.getElementById('results');
+            
+            try {
+                results.innerHTML += '<h2>Testing raw fetch with headers...</h2>';
+                
+                // Test 1: Raw fetch with headers
+                const response = await fetch(`${supabaseUrl}/rest/v1/entities?limit=5`, {
+                    headers: {
+                        'apikey': supabaseAnonKey,
+                        'Authorization': `Bearer ${supabaseAnonKey}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=representation'
+                    }
+                });
+                
+                results.innerHTML += `<p>Response status: ${response.status}</p>`;
+                const text = await response.text();
+                results.innerHTML += `<p>Response: <pre>${text}</pre></p>`;
+                
+                // Test 2: Using Supabase client
+                results.innerHTML += '<h2>Testing Supabase client...</h2>';
+                const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+                
+                const { data, error } = await supabase
+                    .from('entities')
+                    .select('*')
+                    .limit(5);
+                    
+                if (error) {
+                    results.innerHTML += `<p style="color: red">Supabase Error: ${JSON.stringify(error, null, 2)}</p>`;
+                } else {
+                    results.innerHTML += `<p style="color: green">Success! Found ${data.length} entities</p>`;
+                    results.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+                
+            } catch (err) {
+                results.innerHTML += `<p style="color: red">Error: ${err.message}</p>`;
+            }
+        }
+        
+        testConnection();
+    </script>
+</body>
+</html>
