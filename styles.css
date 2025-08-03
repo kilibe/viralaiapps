@@ -1403,9 +1403,34 @@ body {
     .content-table td:first-child {
         position: sticky;
         left: 0;
-        background-color: inherit;
+        background-color: #fff;
         z-index: 1;
-        min-width: 120px;
+        width: 140px;
+        max-width: 140px;
+        border-right: 1px solid #e5e7eb;
+        box-shadow: 1px 0 3px rgba(0,0,0,0.1);
+    }
+    
+    .content-table thead th:first-child {
+        background-color: #f9fafb;
+    }
+    
+    .content-table .app-info {
+        width: 130px;
+    }
+    
+    .content-table .app-info strong {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 13px;
+    }
+    
+    .content-table .app-description {
+        font-size: 11px;
+        line-height: 1.3;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .newsletter-grid {
@@ -1515,7 +1540,33 @@ body {
     
     .content-table th:first-child,
     .content-table td:first-child {
-        min-width: 100px;
+        width: 140px;
+        max-width: 140px;
+        background-color: #fff;
+        border-right: 1px solid #e5e7eb;
+        box-shadow: 1px 0 3px rgba(0,0,0,0.1);
+    }
+    
+    .content-table thead th:first-child {
+        background-color: #f9fafb;
+    }
+    
+    .content-table .app-info {
+        width: 130px;
+    }
+    
+    .content-table .app-info strong {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 12px;
+    }
+    
+    .content-table .app-description {
+        font-size: 10px;
+        line-height: 1.3;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .newsletter-card {
