@@ -192,76 +192,12 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        <tr class="clickable-row" data-entity-id="" data-entity-name="ChatGPT">
-                            <td>
-                                <div class="app-info">
-                                    <strong>ChatGPT</strong>
-                                    <div class="app-description">AI-powered conversational assistant for various tasks</div>
-                                </div>
-                            </td>
-                            <td class="growth-positive">+2,340%</td>
-                            <td>100M+ users</td>
-                            <td>$11.3B</td>
-                            <td>Series C</td>
-                            <td><span class="category-teal">General chatbots</span></td>
-                        </tr>
-                        <tr class="clickable-row" data-entity-id="" data-entity-name="Midjourney">
-                            <td>
-                                <div class="app-info">
-                                    <strong>Midjourney</strong>
-                                    <div class="app-description">AI image generation platform for creative professionals</div>
-                                </div>
-                            </td>
-                            <td class="growth-positive">+1,890%</td>
-                            <td>15M+ users</td>
-                            <td>$200M</td>
-                            <td>Series A</td>
-                            <td><span class="category-orange">Image gen</span></td>
-                        </tr>
-                        <tr class="clickable-row" data-entity-id="" data-entity-name="Stable Diffusion">
-                            <td>
-                                <div class="app-info">
-                                    <strong>Stable Diffusion</strong>
-                                    <div class="app-description">Open-source AI model for text-to-image generation</div>
-                                </div>
-                            </td>
-                            <td class="growth-positive">+1,567%</td>
-                            <td>10M+ users</td>
-                            <td>$101M</td>
-                            <td>Seed</td>
-                            <td><span class="category-orange">Image gen</span></td>
-                        </tr>
-                        <tr class="clickable-row" data-entity-id="" data-entity-name="Notion AI">
-                            <td>
-                                <div class="app-info">
-                                    <strong>Notion AI</strong>
-                                    <div class="app-description">AI writing assistant integrated into productivity workspace</div>
-                                </div>
-                            </td>
-                            <td class="growth-positive">+987%</td>
-                            <td>30M+ users</td>
-                            <td>$343M</td>
-                            <td>Series C</td>
-                            <td><span class="category-navy">Office tools & productivity</span></td>
-                        </tr>
-                        <tr class="clickable-row" data-entity-id="" data-entity-name="GitHub Copilot">
-                            <td>
-                                <div class="app-info">
-                                    <strong>GitHub Copilot</strong>
-                                    <div class="app-description">AI-powered code completion and programming assistant</div>
-                                </div>
-                            </td>
-                            <td class="growth-positive">+745%</td>
-                            <td>1M+ users</td>
-                            <td>N/A</td>
-                            <td>Microsoft</td>
-                            <td><span class="category-dark">Build & code</span></td>
-                        </tr>
+                        <!-- Table content will be loaded dynamically from Supabase -->
                     </tbody>
                 </table>
             </div>
         </main>
-    </div>
+        </div>
 
     <!-- Modal Container -->
     <div class="modal-overlay" id="modalOverlay">
@@ -317,7 +253,7 @@
             content.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
-        });
+                });
         
         // Initialize modal
         const modalOverlay = document.getElementById('modalOverlay');
@@ -346,5 +282,6 @@
     <!-- Load modules after basic functionality -->
     <script type="module" src="supabase-client.js"></script>
     <script type="module" src="script-updated.js"></script>
+    <script src="detail-page.js"></script>
 </body>
 </html>
