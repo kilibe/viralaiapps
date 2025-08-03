@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral AI Apps - Trending AI Projects Directory</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <main class="main-content">
+            <header class="page-header">
+                <h1>AI Startups Directory</h1>
+                <p>Debug Version - Testing Supabase Connection</p>
+            </header>
+            
+            <div class="table-container">
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Growth</th>
+                            <th>Volume</th>
+                            <th>Total Funding</th>
+                            <th>Latest Round</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr><td colspan="6" style="text-align: center; padding: 20px;">Loading data from Supabase...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="debug-info" style="margin: 20px; padding: 20px; background: #f5f5f5; font-family: monospace; white-space: pre-wrap;"></div>
+        </main>
+    </div>
+
+    <script>
+    // Debug logging
+    const debug = (msg, data) => {
+        console.log(msg, data);
+        const debugDiv = document.getElementById('debug-info');
+        debugDiv.innerHTML += `${new Date().toISOString()} - ${msg}\n${data ? JSON.stringify(data, null, 2) : ''}\n\n`;
+    };
+
+    // Initialize and load data
+    (async function() {
+        debug('Starting data load...');
+        
+        const supabaseUrl = 'https://rygermxpngibrkvmpqqf.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5Z2VybXhwbmdpYnJrdm1wcXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNTYxNTIsImV4cCI6MjA2OTczMjE1Mn0.Stvxenw41DlbxmmW2plGWKePmMs6VHGu6KOVcBCMaJ8';
+        
+        try {
+            debug('Creating Supabase client...');
+            const { createClient } = window.supabase;
+            if (!createClient) {
+                throw new Error('Supabase createClient not found');
+            }
+            
+            const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+            debug('Supabase client created');
+            
+            // Test connection with a simple query
+            debug('Testing connection...');
+            const { data: testData, error: testError } = await supabaseClient
+                .from('entities')
+                .select('id, name')
+                .limit(1);
+            
+            if (testError) {
+                debug('Test query error:', testError);
+                throw testError;
+            }
+            
+            debug('Test query successful:', testData);
+            
+            // Fetch all entities
+            debug('Fetching entities...');
+            const { data: entities, error } = await supabaseClient
+                .from('entities')
+                .select('*')
+                .limit(10);
+                
+            if (error) {
+                debug('Entity query error:', error);
+                throw error;
+            }
+            
+            debug('Entities fetched:', { count: entities?.length });
+            
+            // Display data
+            const tbody = document.getElementById('table-body');
+            if (!entities || entities.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No data found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = '';
+            entities.forEach(entity => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entity.name}</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>${Array.isArray(entity.category) ? entity.category[0] : 'AI'}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            debug('Table updated successfully');
+            
+        } catch (error) {
+            debug('Error:', error);
+            document.getElementById('table-body').innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 20px; color: red;">Error: ${error.message}</td></tr>`;
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -2,11 +2,14 @@
 // This will work with the existing HTML table
 
 // Wait for DOM to be fully loaded
+// Make showDetailPage globally available
+window.showDetailPage = showDetailPage;
+
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Adding detail page functionality...');
+    console.log('Detail page functionality loaded');
     
-    // Add click handlers to existing table rows
-    addDetailPageHandlers();
+    // Don't add handlers here since we're handling clicks in the main script
+    // addDetailPageHandlers();
 });
 
 function addDetailPageHandlers() {

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Supabase Connection Test</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Supabase Connection Test</h1>
+    <div id="debug-info" style="margin: 20px; padding: 20px; background: #f5f5f5; font-family: monospace; white-space: pre-wrap;"></div>
+
+    <script>
+    // Debug logging
+    const debug = (msg, data) => {
+        console.log(msg, data);
+        const debugDiv = document.getElementById('debug-info');
+        debugDiv.innerHTML += `${new Date().toISOString()} - ${msg}\n${data ? JSON.stringify(data, null, 2) : ''}\n\n`;
+    };
+
+    // Test Supabase
+    (async function() {
+        debug('Starting test...');
+        
+        try {
+            // Check if Supabase is loaded
+            debug('Checking Supabase availability...');
+            if (typeof window.supabase === 'undefined') {
+                throw new Error('Supabase library not loaded');
+            }
+            
+            debug('Supabase library found');
+            
+            const { createClient } = window.supabase;
+            if (!createClient) {
+                throw new Error('createClient function not found');
+            }
+            
+            debug('createClient function found');
+            
+            // Create client
+            const supabaseUrl = 'https://rygermxpngibrkvmpqqf.supabase.co';
+            const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5Z2VybXhwbmdpYnJrdm1wcXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNTYxNTIsImV4cCI6MjA2OTczMjE1Mn0.Stvxenw41DlbxmmW2plGWKePmMs6VHGu6KOVcBCMaJ8';
+            
+            const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+            debug('Client created successfully');
+            
+            // Test query
+            const { data, error } = await supabaseClient
+                .from('entities')
+                .select('id, name')
+                .limit(3);
+            
+            if (error) {
+                debug('Query error:', error);
+            } else {
+                debug('Query successful! Data:', data);
+            }
+            
+        } catch (error) {
+            debug('Critical error:', error.message);
+        }
+    })();
+    </script>
+</body>
+</html>
