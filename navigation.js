@@ -1054,10 +1054,17 @@ async function handleGoogleSignIn() {
     try {
         showAuthLoading('Redirecting to Google...');
         
+        // Get the current URL without any hash or search params
+        const redirectUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
+        
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: window.location.origin
+                redirectTo: redirectUrl,
+                queryParams: {
+                    access_type: 'offline',
+                    prompt: 'consent',
+                }
             }
         });
         
@@ -1279,10 +1286,22 @@ function showAccountSettings() {
     showAuthError('Account settings coming soon');
 }
 
+// Handle OAuth callback on page load
+function handleOAuthCallback() {
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+        console.log('OAuth callback detected');
+        // Supabase will automatically handle the callback
+        setTimeout(() => {
+            checkUserSession();
+        }, 1000);
+    }
+}
+
 // Initialize authentication when DOM loads
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         initializeSupabase();
+        handleOAuthCallback();
     }, 1000);
 });
 
