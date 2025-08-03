@@ -192,7 +192,7 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        <tr><td colspan="6" style="text-align: center; padding: 20px;">Loading data from Supabase...</td></tr>
+                        <!-- Table content will be loaded dynamically from Supabase -->
                     </tbody>
                 </table>
             </div>
@@ -213,107 +213,9 @@
     <script src="navigation.js"></script>
     <script src="chart.js"></script>
     
-    <!-- Direct inline Supabase data loading -->
+    <!-- Initialize basic functionality immediately -->
     <script>
-    // Initialize Supabase and load data directly
-    (async function() {
-        console.log('Starting direct data load...');
-        
-        const supabaseUrl = 'https://rygermxpngibrkvmpqqf.supabase.co';
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5Z2VybXhwbmdpYnJrdm1wcXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNTYxNTIsImV4cCI6MjA2OTczMjE1Mn0.Stvxenw41DlbxmmW2plGWKePmMs6VHGu6KOVcBCMaJ8';
-        
-        try {
-            // Create Supabase client
-            const { createClient } = window.supabase;
-            const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-            
-            // Fetch entities
-            const { data: entities, error } = await supabaseClient
-                .from('entities')
-                .select('*');
-                
-            console.log('Query result:', { entities, error });
-            
-            if (error) {
-                throw error;
-            }
-            
-            if (!entities || entities.length === 0) {
-                document.getElementById('table-body').innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No data found in database</td></tr>';
-                return;
-            }
-            
-            // Also fetch metrics and funding data
-            const entityIds = entities.map(e => e.id);
-            
-            const { data: metrics } = await supabaseClient
-                .from('daily_metrics')
-                .select('entity_id, volume')
-                .in('entity_id', entityIds);
-                
-            const { data: indicators } = await supabaseClient
-                .from('virality_indicators')
-                .select('entity_id, growth_rate_30d')
-                .in('entity_id', entityIds);
-                
-            const { data: funding } = await supabaseClient
-                .from('funding_rounds')
-                .select('entity_id, amount, round_type')
-                .in('entity_id', entityIds);
-            
-            // Create lookup maps
-            const metricsMap = {};
-            const indicatorsMap = {};
-            const fundingMap = {};
-            
-            metrics?.forEach(m => metricsMap[m.entity_id] = m);
-            indicators?.forEach(i => indicatorsMap[i.entity_id] = i);
-            funding?.forEach(f => fundingMap[f.entity_id] = f);
-            
-            // Update table
-            const tbody = document.getElementById('table-body');
-            tbody.innerHTML = entities.map(entity => {
-                const volume = metricsMap[entity.id]?.volume || null;
-                const growth = indicatorsMap[entity.id]?.growth_rate_30d || null;
-                const fundingData = fundingMap[entity.id];
-                
-                // Format values
-                const formatVolume = volume ? (volume >= 1000000 ? (volume/1000000).toFixed(1) + 'M' : volume >= 1000 ? (volume/1000).toFixed(1) + 'K' : volume) + ' users' : 'N/A';
-                const formatGrowth = growth ? '+' + parseFloat(growth).toFixed(0) + '%' : 'N/A';
-                const formatFunding = fundingData?.amount ? '$' + (fundingData.amount >= 1000000000 ? (fundingData.amount/1000000000).toFixed(1) + 'B' : fundingData.amount >= 1000000 ? (fundingData.amount/1000000).toFixed(1) + 'M' : (fundingData.amount/1000).toFixed(0) + 'K') : 'N/A';
-                const round = fundingData?.round_type || 'N/A';
-                
-                const category = Array.isArray(entity.category) && entity.category.length > 0 ? entity.category[0] : 'AI';
-                const categoryClass = category.toLowerCase().includes('llm') || category.toLowerCase().includes('api') ? 'slate' : 
-                                    category.toLowerCase().includes('workflow') || category.toLowerCase().includes('build') ? 'navy' :
-                                    category.toLowerCase().includes('writing') ? 'teal' : 'slate';
-                
-                return `
-                    <tr class="clickable-row" data-entity-id="${entity.id}" data-entity-name="${entity.name}">
-                        <td>
-                            <div class="app-info">
-                                <strong>${entity.name}</strong>
-                                <div class="app-description">${entity.short_description || ''}</div>
-                            </div>
-                        </td>
-                        <td class="${growth && growth > 0 ? 'growth-positive' : ''}">${formatGrowth}</td>
-                        <td>${formatVolume}</td>
-                        <td>${formatFunding}</td>
-                        <td>${round}</td>
-                        <td><span class="category-${categoryClass}">${category}</span></td>
-                    </tr>
-                `;
-            }).join('');
-            
-            console.log('Data loaded successfully!');
-            
-        } catch (error) {
-            console.error('Error loading data:', error);
-            document.getElementById('table-body').innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 20px; color: red;">Error: ${error.message}</td></tr>`;
-        }
-    })();
-    
-    // Initialize dropdowns and other features
+    // Initialize dropdowns
     document.addEventListener('DOMContentLoaded', function() {
         const dropdowns = document.querySelectorAll('.dropdown');
         
@@ -346,6 +248,13 @@
             });
         });
         
+        // Prevent dropdown content clicks from closing dropdown
+        document.querySelectorAll('.dropdown-content').forEach(content => {
+            content.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+                });
+        
         // Initialize modal
         const modalOverlay = document.getElementById('modalOverlay');
         const modalClose = document.getElementById('modalClose');
@@ -353,6 +262,7 @@
         if (modalClose) {
             modalClose.addEventListener('click', function() {
                 modalOverlay.classList.remove('active');
+                modalOverlay.classList.remove('chart-modal');
                 document.body.style.overflow = '';
             });
         }
@@ -361,11 +271,74 @@
             modalOverlay.addEventListener('click', function(e) {
                 if (e.target === modalOverlay) {
                     modalOverlay.classList.remove('active');
+                    modalOverlay.classList.remove('chart-modal');
                     document.body.style.overflow = '';
                 }
             });
         }
     });
+    </script>
+    
+    <!-- Load modules after basic functionality -->
+    <script type="module" src="supabase-client.js"></script>
+    <script type="module" src="script-updated.js"></script>
+    <script src="detail-page.js"></script>
+    
+    <!-- Fallback inline script to ensure data loads -->
+    <script type="module">
+        import { createClient } from 'https://unpkg.com/@supabase/supabase-js@2';
+        
+        // Wait a bit for other scripts to load
+        setTimeout(async () => {
+            console.log('Fallback script running...');
+            
+            // Check if data is already loaded
+            const tbody = document.querySelector('.content-table tbody');
+            if (tbody && tbody.children.length > 0 && !tbody.innerHTML.includes('Loading')) {
+                console.log('Data already loaded, skipping fallback');
+                return;
+            }
+            
+            console.log('Loading data with fallback script...');
+            
+            // Initialize Supabase
+            const supabaseUrl = 'https://rygermxpngibrkvmpqqf.supabase.co';
+            const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5Z2VybXhwbmdpYnJrdm1wcXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNTYxNTIsImV4cCI6MjA2OTczMjE1Mn0.Stvxenw41DlbxmmW2plGWKePmMs6VHGu6KOVcBCMaJ8';
+            const supabase = createClient(supabaseUrl, supabaseAnonKey);
+            
+            try {
+                // Fetch entities
+                const { data: entities, error } = await supabase
+                    .from('entities')
+                    .select('*');
+                    
+                if (error) throw error;
+                
+                console.log('Fallback loaded entities:', entities);
+                
+                // Update table
+                if (entities && entities.length > 0) {
+                    tbody.innerHTML = entities.map(entity => `
+                        <tr class="clickable-row" data-entity-id="${entity.id}" data-entity-name="${entity.name}">
+                            <td>
+                                <div class="app-info">
+                                    <strong>${entity.name}</strong>
+                                    <div class="app-description">${entity.short_description || ''}</div>
+                                </div>
+                            </td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td><span class="category-slate">${Array.isArray(entity.category) ? entity.category[0] : 'AI'}</span></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error('Fallback error:', err);
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">Error: ${err.message}</td></tr>`;
+            }
+        }, 2000);
     </script>
 </body>
 </html>
