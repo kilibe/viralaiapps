@@ -114,9 +114,11 @@ export function formatNumber(num) {
 
 // Function to format growth percentage
 export function formatGrowth(growth) {
-  if (!growth) return 'N/A'
-  const sign = growth > 0 ? '+' : ''
-  return `${sign}${growth.toFixed(0)}%`
+  if (growth === null || growth === undefined) return 'N/A'
+  const growthNum = parseFloat(growth)
+  if (isNaN(growthNum)) return 'N/A'
+  const sign = growthNum > 0 ? '+' : ''
+  return `${sign}${growthNum.toFixed(0)}%`
 }
 
 // Function to format funding amount
