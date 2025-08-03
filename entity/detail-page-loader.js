@@ -86,6 +86,7 @@ async function loadEntityDetails() {
             return num.toString();
         };
         
+        const virality = latestMetric.total_virality || 0;
         const volume = latestMetric.volume || 0;
         const growth = latestIndicator.growth_rate_30d || 0;
         const fundingAmount = latestFunding.amount || 0;
@@ -138,8 +139,8 @@ async function loadEntityDetails() {
                 </div>
                 <div class="detail-metrics">
                     <div class="metric-card">
-                        <div class="metric-value">${formatNumber(volume)}</div>
-                        <div class="metric-label">Volume <span class="info-icon" title="Monthly active users">ⓘ</span></div>
+                        <div class="metric-value">${formatNumber(virality)}</div>
+                        <div class="metric-label">Virality <span class="info-icon" title="Total virality score">ⓘ</span></div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-value ${growth > 0 ? 'growth-positive' : ''}">${growth > 0 ? '+' : ''}${parseFloat(growth).toFixed(0)}%</div>

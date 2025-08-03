@@ -33,9 +33,6 @@ body {
     padding: 0 24px 32px;
     border-bottom: 1px solid #f0f0f0;
     margin-bottom: 24px;
-}
-
-.logo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,25 +44,30 @@ body {
     justify-content: center;
 }
 
-.logo-icon svg {
-    width: 60px;
-    height: 60px;
+.logo-icon img {
+    width: 112px;
+    height: 112px;
+    object-fit: contain;
 }
 
-.logo-text {
-    text-align: center;
-    font-weight: 700;
-    color: #FF4500;
-    line-height: 1.1;
+/* Mobile Logo Pattern - Hidden on desktop */
+.mobile-logo-pattern {
+    display: none;
+    position: relative;
+    width: 100%;
+    height: 24px;
+    background-image: url('vaamobilelogo.png');
+    background-repeat: repeat-x;
+    background-size: auto 20px;
+    background-position: center;
+    margin: 10px 0;
+    opacity: 0.8;
+    border-radius: 4px;
 }
 
-.logo-line1 {
-    font-size: 18px;
-    margin-bottom: 2px;
-}
-
-.logo-line2 {
-    font-size: 18px;
+/* For entity detail pages */
+body[data-page="detail"] .mobile-logo-pattern {
+    background-image: url('../vaamobilelogo.png');
 }
 
 .nav-menu {
@@ -94,56 +96,62 @@ body {
     border-left-color: #FF4500;
 }
 
-/* Navigation Footer */
+/* Navigation Footer - Fixed Bottom Bar */
 .nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+    padding: 8px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
     display: flex;
     justify-content: center;
-    gap: 16px;
-    padding: 24px 16px 0;
-    margin-top: auto;
-    border-top: 1px solid #f0f0f0;
+    align-items: center;
+    gap: 40px;
 }
 
 .nav-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     text-decoration: none;
     transition: transform 0.2s ease, color 0.2s ease;
     color: #6b7280;
     cursor: pointer;
     filter: grayscale(1);
-}
-
-.nav-icon svg {
-    width: 24px;
-    height: 24px;
+    border-radius: 8px;
 }
 
 .nav-icon:hover {
     transform: translateY(-2px);
     color: #374151;
     filter: grayscale(0.8);
+    background-color: #f8fafc;
 }
 
 /* Main Content Area */
 .main-content {
     flex: 1;
     padding: 32px 40px;
+    padding-bottom: 80px; /* Add extra padding for fixed bottom bar */
     overflow-x: auto;
 }
 
 .page-header {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 }
 
 .page-header h1 {
     font-size: 32px;
     font-weight: 700;
     color: #1f2937;
-    margin-bottom: 8px;
+    margin-bottom: 0;
 }
 
 .page-header p {
@@ -153,7 +161,7 @@ body {
 
 /* Filters Section */
 .filters-section {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -1275,6 +1283,42 @@ body {
     }
 }
 
+/* Mobile Logo Pattern */
+.mobile-logo-pattern {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background-image: url('vaamobilelogo.png');
+    background-repeat: repeat-x;
+    background-size: auto 16px;
+    background-position: center;
+    margin: 20px 0;
+    opacity: 0.8;
+}
+
+/* For entity detail pages */
+.entity .mobile-logo-pattern,
+body[data-page="detail"] .mobile-logo-pattern {
+    background-image: url('../vaamobilelogo.png');
+}
+
+/* Alternative pattern with smaller size */
+.mobile-logo-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.mobile-logo-line img {
+    height: 16px;
+    width: auto;
+    opacity: 0.7;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .filter-group {
@@ -1308,17 +1352,24 @@ body {
     
     .logo {
         text-align: center;
-        padding: 16px 24px 24px;
+        padding: 0 16px;
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 16px;
     }
     
-    .logo-icon svg {
-        width: 50px;
-        height: 50px;
+    /* Hide desktop logo on mobile */
+    .logo-icon {
+        display: none;
     }
     
-    .logo-line1,
-    .logo-line2 {
-        font-size: 16px;
+    /* Show mobile pattern on mobile */
+    .mobile-logo-pattern {
+        display: block;
+        height: 64px; /* Match logo height exactly */
+        background-size: calc(100% / 3) 64px; /* 3 logos across, 4x bigger height */
+        margin: 0; /* Remove all margins */
+        background-position: center;
+        opacity: 0.9;
     }
     
     .nav-menu {
@@ -1341,44 +1392,9 @@ body {
         border-left: none;
     }
     
-    .nav-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        background-color: #fff;
-        border-top: 1px solid #e0e0e0;
-        padding: 16px 12px;
-        gap: 32px;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 0;
-    }
-    
-    .nav-icon {
-        font-size: 24px;
-        padding: 8px;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-    }
-    
-    .nav-icon:hover {
-        background-color: #f8fafc;
-        transform: translateY(-2px);
-    }
-    
     .main-content {
         padding: 16px;
         padding-bottom: 90px; /* Add more space for fixed nav footer on mobile */
-    }
-    
-    /* Hide the sidebar nav-footer on mobile since we have a fixed one */
-    .sidebar .nav-footer {
-        display: none;
     }
     
     .page-header h1 {
