@@ -5,7 +5,12 @@ import { supabase, fetchEntities, fetchEntityMetrics, fetchEntityForecasts, form
 let currentChart = null;
 let selectedEntity = null;
 
+// Add debugging
+console.log('script-updated.js loaded');
+console.log('Supabase client:', supabase);
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded');
     // Initialize everything
     initializeApp();
 });
@@ -13,41 +18,62 @@ document.addEventListener('DOMContentLoaded', function() {
 async function initializeApp() {
     console.log('Initializing app...');
     
-    // Initialize modal functionality
-    console.log('Initializing modal...');
-    initializeModal();
-    
-    // Initialize dropdowns
-    console.log('Initializing dropdowns...');
-    initializeDropdowns();
-    
-    // Initialize navigation
-    console.log('Initializing navigation...');
-    initializeNavigation();
-    
-    // Load entities from Supabase
-    console.log('Loading entities...');
-    await loadEntities();
-    
-    // Add row click handlers
-    console.log('Initializing row click handlers...');
-    initializeRowClickHandlers();
-    
-    // Set up real-time subscriptions
-    console.log('Setting up real-time subscriptions...');
-    setupRealtimeSubscriptions();
-    
-    console.log('App initialization complete!');
+    try {
+        // Initialize modal functionality
+        console.log('Initializing modal...');
+        initializeModal();
+        
+        // Initialize dropdowns
+        console.log('Initializing dropdowns...');
+        initializeDropdowns();
+        
+        // Initialize navigation
+        console.log('Initializing navigation...');
+        initializeNavigation();
+        
+        // Load entities from Supabase
+        console.log('Loading entities...');
+        await loadEntities();
+        
+        // Add row click handlers
+        console.log('Initializing row click handlers...');
+        initializeRowClickHandlers();
+        
+        // Set up real-time subscriptions
+        console.log('Setting up real-time subscriptions...');
+        setupRealtimeSubscriptions();
+        
+        console.log('App initialization complete!');
+    } catch (error) {
+        console.error('Error during initialization:', error);
+    }
 }
 
 async function loadEntities(filters = {}) {
     try {
         console.log('Loading entities with filters:', filters);
+        
+        // Add a loading message
+        const tbody = document.querySelector('.content-table tbody');
+        if (tbody) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">Loading data from Supabase...</td></tr>';
+        }
+        
         const entities = await fetchEntities(filters);
         console.log('Loaded entities:', entities.length, 'items');
-        updateTable(entities);
+        console.log('First entity:', entities[0]);
+        
+        if (entities.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No data found. Check console for errors.</td></tr>';
+        } else {
+            updateTable(entities);
+        }
     } catch (error) {
         console.error('Error loading entities:', error);
+        const tbody = document.querySelector('.content-table tbody');
+        if (tbody) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 20px; color: red;">Error loading data: ${error.message}</td></tr>`;
+        }
     }
 }
 
@@ -930,3 +956,6 @@ function toggleForecast() {
     this.classList.toggle('active');
     // Add forecast logic here
 }
+
+// Make supabase available globally for debugging
+window.supabase = supabase;
