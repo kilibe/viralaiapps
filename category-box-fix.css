@@ -1,0 +1,36 @@
+/* Category Box Card Spacing Fix - Detail Pages Only */
+
+/* Ensure consistent spacing between category tags */
+.category-box-card .category-display {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.category-box-card .category-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    margin: 0; /* Remove any default margins */
+}
+
+/* Related categories section */
+.category-box-card .related-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.category-box-card .related-categories-wrapper {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.category-box-card .related-category {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    margin: 0; /* Remove any default margins */
+}

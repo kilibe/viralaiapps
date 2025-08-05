@@ -272,3 +272,99 @@ class ViralityChart {
 
 // Export for use in other files
 window.ViralityChart = ViralityChart;
+
+// Function to generate chart data based on entity metrics
+function generateChartData(entityName, growthText, volumeText) {
+    const data = [];
+    const days = 30; // Default to 30 days of data
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+    
+    // Parse growth percentage
+    const growth = parseFloat(growthText.replace(/[^0-9.-]/g, '')) || 0;
+    const dailyGrowth = Math.pow(1 + growth/100, 1/days) - 1;
+    
+    // Parse current volume
+    let currentVolume = 0;
+    if (volumeText.includes('M')) {
+        currentVolume = parseFloat(volumeText.replace(/[^0-9.]/g, '')) * 1000000;
+    } else if (volumeText.includes('K')) {
+        currentVolume = parseFloat(volumeText.replace(/[^0-9.]/g, '')) * 1000;
+    } else {
+        currentVolume = parseFloat(volumeText.replace(/[^0-9]/g, '')) || 100000;
+    }
+    
+    // Calculate starting volume
+    let startVolume = currentVolume / Math.pow(1 + dailyGrowth, days);
+    
+    // Generate data points
+    for (let i = 0; i <= days; i++) {
+        const date = new Date(startDate);
+        date.setDate(date.getDate() + i);
+        
+        // Add some randomness for realistic variation
+        const randomFactor = 1 + (Math.random() - 0.5) * 0.05;
+        const value = startVolume * Math.pow(1 + dailyGrowth, i) * randomFactor;
+        
+        data.push({
+            date: date.toISOString().split('T')[0],
+            value: Math.round(value)
+        });
+    }
+    
+    return data;
+}
+
+// Export the function
+window.generateChartData = generateChartData;
+
+// Function to generate chart data for specific number of days
+function generateChartDataForDays(entityName, growthText, volumeText, days) {
+    const data = [];
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+    
+    // Parse growth percentage
+    const growth = parseFloat(growthText.replace(/[^0-9.-]/g, '')) || 0;
+    const dailyGrowth = Math.pow(1 + growth/100, 1/30) - 1; // Keep 30-day growth rate
+    
+    // Parse current volume
+    let currentVolume = 0;
+    if (volumeText.includes('M')) {
+        currentVolume = parseFloat(volumeText.replace(/[^0-9.]/g, '')) * 1000000;
+    } else if (volumeText.includes('K')) {
+        currentVolume = parseFloat(volumeText.replace(/[^0-9.]/g, '')) * 1000;
+    } else {
+        currentVolume = parseFloat(volumeText.replace(/[^0-9]/g, '')) || 100000;
+    }
+    
+    // Calculate starting volume for the period
+    let startVolume = currentVolume / Math.pow(1 + dailyGrowth, days);
+    
+    // Determine data point interval based on days
+    let interval = 1;
+    let maxPoints = 30;
+    if (days > maxPoints) {
+        interval = Math.ceil(days / maxPoints);
+    }
+    
+    // Generate data points
+    for (let i = 0; i <= days; i += interval) {
+        const date = new Date(startDate);
+        date.setDate(date.getDate() + i);
+        
+        // Add some randomness for realistic variation
+        const randomFactor = 1 + (Math.random() - 0.5) * 0.05;
+        const value = startVolume * Math.pow(1 + dailyGrowth, i) * randomFactor;
+        
+        data.push({
+            date: date.toISOString().split('T')[0],
+            value: Math.round(value)
+        });
+    }
+    
+    return data;
+}
+
+// Export the function
+window.generateChartDataForDays = generateChartDataForDays;

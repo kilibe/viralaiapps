@@ -4,27 +4,16 @@
     box-sizing: border-box;
 }
 
-html {
-    height: 100%;
-    overflow: hidden;
-}
-
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background-color: #fafafa;
     color: #333;
     line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
 }
 
 .container {
     display: flex;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
 }
 
 /* Left Navigation Sidebar */
@@ -37,9 +26,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    height: 100vh;
-    overflow-y: auto;
+    justify-content: space-between;
 }
 
 .logo {
@@ -50,15 +37,6 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    text-decoration: none;
-}
-
-a.logo {
-    text-decoration: none;
-}
-
-a.logo:hover {
-    opacity: 0.9;
 }
 
 .logo-icon {
@@ -125,53 +103,44 @@ body[data-page="detail"] .mobile-logo-pattern {
     left: 0;
     right: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background-color: #fff;
     border-top: 1px solid #e0e0e0;
-    padding: 2px 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    padding: 8px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 25px;
-    height: 29px; /* 40% thinner: 48px * 0.6 = 28.8px */
+    gap: 40px;
 }
 
 .nav-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 25px; /* 30% smaller: 36px * 0.7 = 25.2px */
-    height: 25px; /* 30% smaller: 36px * 0.7 = 25.2px */
+    width: 40px;
+    height: 40px;
     text-decoration: none;
-    transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.2s ease, color 0.2s ease;
     color: #6b7280;
     cursor: pointer;
     filter: grayscale(1);
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
 .nav-icon:hover {
-    transform: translateY(-1px) scale(1.05);
+    transform: translateY(-2px);
     color: #374151;
-    filter: grayscale(0);
-    background-color: rgba(248, 250, 252, 0.8);
-}
-
-.nav-icon svg {
-    width: 14px; /* 30% smaller: 20px * 0.7 = 14px */
-    height: 14px; /* 30% smaller: 20px * 0.7 = 14px */
+    filter: grayscale(0.8);
+    background-color: #f8fafc;
 }
 
 /* Main Content Area */
 .main-content {
     flex: 1;
     padding: 32px 40px;
-    padding-bottom: 45px; /* Adjusted for thinner nav bar */
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 29px); /* Account for nav footer height */
+    padding-bottom: 80px; /* Add extra padding for fixed bottom bar */
+    overflow-x: auto;
 }
 
 .page-header {
@@ -304,10 +273,8 @@ body[data-page="detail"] .mobile-logo-pattern {
     background-color: #fff;
     border-radius: 8px;
     border: 1px solid #e5e7eb;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: hidden;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    max-width: 100%;
 }
 
 .content-table {
@@ -346,7 +313,7 @@ body[data-page="detail"] .mobile-logo-pattern {
 }
 
 .growth-negative {
-    color: #FF4500; /* Reddit red */
+    color: #dc2626;
     font-weight: 600;
 }
 
@@ -575,14 +542,32 @@ body[data-page="detail"] .mobile-logo-pattern {
 }
 
 /* Category Color Classes */
-.category-teal,
-.category-orange,
-.category-navy,
-.category-dark,
-.category-bronze,
-.category-maroon,
+.category-teal {
+    color: #008080 !important;
+}
+
+.category-orange {
+    color: #FF4500 !important;
+}
+
+.category-navy {
+    color: #003366 !important;
+}
+
+.category-dark {
+    color: #333333 !important;
+}
+
+.category-bronze {
+    color: #CD7F32 !important;
+}
+
+.category-maroon {
+    color: #800000 !important;
+}
+
 .category-slate {
-    color: #9ca3af !important;
+    color: #708090 !important;
 }
 
 /* Additional category mappings */
@@ -591,20 +576,29 @@ body[data-page="detail"] .mobile-logo-pattern {
 .category-training,
 .category-benchmark,
 .category-enterprise,
-.category-security,
+.category-security {
+    color: #708090 !important;
+}
+
 .category-workflow,
 .category-office,
 .category-prompts,
 .category-memory,
-.category-organize,
+.category-organize {
+    color: #003366 !important;
+}
+
 .category-build,
-.category-design,
+.category-design {
+    color: #333333 !important;
+}
+
 .category-writing,
 .category-research,
 .category-browser,
 .category-translation,
 .category-reader {
-    color: #9ca3af !important;
+    color: #008080 !important;
 }
 
 /* Modal Styles */
@@ -1336,18 +1330,11 @@ body[data-page="detail"] .mobile-logo-pattern {
 @media (max-width: 900px) and (min-width: 769px) {
     .nav-footer {
         gap: 20px;
-        padding: 2px 0;
-        height: 28px; /* 40% thinner */
+        padding: 14px;
     }
     
     .nav-icon {
-        width: 24px; /* 30% smaller */
-        height: 24px; /* 30% smaller */
-    }
-    
-    .nav-icon svg {
-        width: 13px; /* 30% smaller */
-        height: 13px; /* 30% smaller */
+        font-size: 22px;
     }
 }
 
@@ -1407,7 +1394,7 @@ body[data-page="detail"] .mobile-logo-pattern {
     
     .main-content {
         padding: 16px;
-        padding-bottom: 40px; /* Adjusted for thinner nav bar on mobile */
+        padding-bottom: 90px; /* Add more space for fixed nav footer on mobile */
     }
     
     .page-header h1 {
@@ -1580,7 +1567,6 @@ body[data-page="detail"] .mobile-logo-pattern {
     align-items: flex-start;
     margin-bottom: 32px;
     gap: 40px;
-    position: relative;
 }
 
 .detail-title-section {
@@ -1588,31 +1574,23 @@ body[data-page="detail"] .mobile-logo-pattern {
 }
 
 .detail-title-section h1 {
-    font-size: 38.4px; /* 20% smaller than 48px */
+    font-size: 48px;
     font-weight: 700;
     color: #1f2937;
     margin-bottom: 12px;
 }
 
 .detail-description {
-    font-size: 14.4px; /* 20% smaller than 18px */
+    font-size: 18px;
     color: #6b7280;
     line-height: 1.6;
     max-width: 600px;
-}
-
-/* Metrics Wrapper */
-.detail-metrics-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
 }
 
 /* Metrics Cards */
 .detail-metrics {
     display: flex;
     gap: 24px;
-    width: 100%;
 }
 
 .metric-card {
@@ -1622,7 +1600,6 @@ body[data-page="detail"] .mobile-logo-pattern {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     text-align: center;
     min-width: 150px;
-    flex: 1;
 }
 
 .metric-value {
@@ -1644,61 +1621,6 @@ body[data-page="detail"] .mobile-logo-pattern {
     align-items: center;
     justify-content: center;
     gap: 4px;
-}
-
-/* Company Info Box - Below metrics */
-.company-info-box {
-    background: white;
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    width: 100%;
-    border: 1px solid #e5e7eb;
-}
-
-.info-box-content {
-    font-size: 14px;
-    line-height: 1.8;
-    color: #4b5563;
-}
-
-.info-box-content strong {
-    color: #1f2937;
-    font-weight: 600;
-    margin-right: 8px;
-}
-
-.info-link {
-    color: #4F46E5;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.info-link:hover {
-    color: #4338ca;
-    text-decoration: underline;
-}
-
-.social-inline-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    background-color: #f3f4f6;
-    text-decoration: none;
-    color: #4b5563;
-    font-weight: 600;
-    font-size: 12px;
-    margin: 0 4px;
-    transition: all 0.2s ease;
-    vertical-align: middle;
-}
-
-.social-inline-link:hover {
-    background-color: #e5e7eb;
-    transform: translateY(-1px);
 }
 
 /* Company Info Row */
@@ -1826,9 +1748,6 @@ body[data-page="detail"] .mobile-logo-pattern {
     border-radius: 16px;
     padding: 24px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    min-height: 380px;
-    display: flex;
-    flex-direction: column;
 }
 
 .channel-breakdown-card h3,
@@ -1847,7 +1766,6 @@ body[data-page="detail"] .mobile-logo-pattern {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    flex: 1;
 }
 
 .channel-item {
@@ -1867,14 +1785,6 @@ body[data-page="detail"] .mobile-logo-pattern {
     font-size: 14px;
     font-weight: 600;
     color: #6b7280;
-    filter: grayscale(100%);
-    opacity: 0.8;
-}
-
-.channel-icon svg {
-    width: 16px;
-    height: 16px;
-    fill: #374151;
 }
 
 .channel-bar {
@@ -1887,7 +1797,7 @@ body[data-page="detail"] .mobile-logo-pattern {
 
 .channel-fill {
     height: 100%;
-    background-color: #6b7280;
+    background-color: #4F46E5;
     border-radius: 4px;
     transition: width 0.3s ease;
 }
@@ -1898,17 +1808,12 @@ body[data-page="detail"] .mobile-logo-pattern {
     border-radius: 16px;
     padding: 24px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    min-height: 380px;
-    display: flex;
-    flex-direction: column;
 }
 
 .indicator-list {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    flex: 1;
-    justify-content: space-between;
 }
 
 .indicator-item {
@@ -1956,130 +1861,80 @@ body[data-page="detail"] .mobile-logo-pattern {
     border-radius: 16px;
     padding: 24px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    min-height: 380px;
-    display: flex;
-    flex-direction: column;
 }
 
 .category-display {
-    margin-bottom: 30px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .category-tag {
     display: inline-block;
-    padding: 8px 12px;
+    padding: 8px 16px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
-    background-color: #f9fafb;
-    border: 1px solid #e5e7eb;
-    color: #9ca3af;
+    background-color: #f3f4f6;
 }
 
 .related-categories {
-    padding-top: 0;
-    margin-top: 0;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 16px;
 }
 
 .related-label {
     font-size: 14px;
     color: #6b7280;
-    margin-bottom: 16px;
-    display: block;
-}
-
-.related-categories-wrapper {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    margin-bottom: 8px;
 }
 
 .related-category {
-    padding: 8px 12px;
-    border: 1px solid #e5e7eb;
+    display: inline-block;
+    padding: 4px 12px;
     background-color: #f9fafb;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #9ca3af;
-    cursor: default;
-    transition: all 0.2s ease;
-    text-align: center;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #6b7280;
+    margin-right: 8px;
+    margin-bottom: 8px;
 }
 
-.related-category:hover {
-    background-color: #f3f4f6;
-    border-color: #d1d5db;
-}
-
-/* Detail Actions - Below metrics */
+/* Detail Actions */
 .detail-actions {
     display: flex;
+    justify-content: flex-end;
     gap: 16px;
-}
-
-/* Action Buttons - Match Back Button Style */
-.action-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #64748b;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    font-size: 14px; /* Match back button */
-}
-
-.action-button:hover {
-    background-color: #f1f5f9;
-    border-color: #cbd5e1;
-    color: #475569;
-}
-
-/* Remove old button styles from being applied */
-.detail-top-bar .export-btn,
-.detail-top-bar .track-btn {
-    all: unset;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #64748b;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.detail-top-bar .export-btn:hover,
-.detail-top-bar .track-btn:hover {
-    background-color: #f1f5f9;
-    border-color: #cbd5e1;
-    color: #475569;
-}
-
-/* Detail Right Section */
-.detail-right-section {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: stretch;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
 }
 
 .export-btn,
 .track-btn {
-    /* Styles removed - now using action-button class */
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.export-btn {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.export-btn:hover {
+    background-color: #e5e7eb;
+}
+
+.track-btn {
+    background-color: #FF4500;
+    color: white;
+    border: none;
+}
+
+.track-btn:hover {
+    background-color: #e63900;
 }
 
 /* Responsive Design for Detail Page */
@@ -2087,15 +1942,6 @@ body[data-page="detail"] .mobile-logo-pattern {
     .detail-header {
         flex-direction: column;
         gap: 24px;
-    }
-    
-    .detail-right-section {
-        width: 100%;
-        align-items: flex-start;
-    }
-    
-    .detail-metrics-wrapper {
-        width: 100%;
     }
     
     .detail-metrics {
@@ -2114,34 +1960,12 @@ body[data-page="detail"] .mobile-logo-pattern {
         padding: 24px;
     }
     
-    .back-button-container {
-        padding: 0 24px; /* Match mobile detail-page padding */
-    }
-    
-    .detail-top-bar {
-        padding: 0 24px; /* Match mobile detail-page padding */
-        flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
-    }
-    
-    .detail-actions {
-        width: 100%;
-        display: flex;
-        gap: 12px;
-    }
-    
-    .action-button {
-        flex: 1;
-        justify-content: center;
-    }
-    
     .detail-title-section h1 {
-        font-size: 25.6px; /* 20% smaller than 32px */
+        font-size: 32px;
     }
     
     .detail-description {
-        font-size: 12.8px; /* 20% smaller than 16px */
+        font-size: 16px;
     }
     
     .metric-card {
@@ -2165,36 +1989,31 @@ body[data-page="detail"] .mobile-logo-pattern {
         flex-wrap: wrap;
     }
     
-    .company-info-box {
-        padding: 16px 20px;
+    .detail-actions {
+        flex-direction: column;
+        gap: 12px;
     }
     
-    .info-box-content {
-        font-size: 13px;
-        line-height: 1.7;
+    .export-btn,
+    .track-btn {
+        width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     .main-content {
         padding: 12px;
-        padding-bottom: 35px; /* Adjusted for thinner nav bar on very small screens */
+        padding-bottom: 85px; /* Adjust for smaller nav footer on very small screens */
     }
     
     .nav-footer {
-        padding: 2px 0;
-        gap: 15px;
-        height: 26px; /* 40% thinner */
+        padding: 12px 8px;
+        gap: 24px;
     }
     
     .nav-icon {
-        width: 22px; /* 30% smaller */
-        height: 22px; /* 30% smaller */
-    }
-    
-    .nav-icon svg {
-        width: 12px; /* 30% smaller */
-        height: 12px; /* 30% smaller */
+        font-size: 22px;
+        padding: 6px;
     }
     
     .page-header {
@@ -2291,19 +2110,9 @@ body[data-page="detail"] .mobile-logo-pattern {
     }
 }
 
-/* Detail Top Bar */
-.detail-top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding: 0 40px; /* Match the detail-page padding */
-}
-
 /* Back Button */
 .back-button-container {
     margin-bottom: 24px;
-    padding: 0 40px; /* Match the detail-page padding */
 }
 
 .back-button {
@@ -2350,4 +2159,3 @@ body[data-page="detail"] .mobile-logo-pattern {
     margin-bottom: 32px;
     font-size: 16px;
 }
-

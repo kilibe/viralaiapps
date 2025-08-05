@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entity Details - Viral AI Apps</title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../category-box-fix.css">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -13,12 +14,12 @@
         <!-- Left Navigation Bar -->
         <nav class="sidebar">
             <div class="sidebar-top">
-                <div class="logo">
+                <a href="../index.html" class="logo">
                     <div class="logo-icon">
                         <img src="../ViralAi Apps.com2.png" alt="ViralAI Apps Logo" width="112" height="112">
                     </div>
                     <div class="mobile-logo-pattern"></div>
-                </div>
+                </a>
             </div>
             <ul class="nav-menu">
                 <li><a href="../index.html" class="nav-item active">Startups</a></li>
@@ -62,14 +63,18 @@
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Back Button -->
-            <div class="back-button-container">
+            <!-- Top Navigation Bar -->
+            <div class="detail-top-bar">
                 <a href="../index.html" class="back-button">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                         <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     Back to Directory
                 </a>
+                <div class="detail-actions">
+                    <a href="#" class="action-button export-btn">Export To CSV</a>
+                    <a href="#" class="action-button track-btn">Track Topic</a>
+                </div>
             </div>
 
             <div id="detail-content" class="detail-page">
@@ -79,7 +84,7 @@
         </main>
     </div>
 
-    <script src="../navigation.js"></script>
+    <script src="../detail-navigation.js"></script>
     <script src="../chart.js"></script>
     <script src="detail-page-loader.js"></script>
 </body>

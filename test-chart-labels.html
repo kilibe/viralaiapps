@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chart Labels</title>
+    <style>
+        body {
+            margin: 20px;
+            font-family: Arial, sans-serif;
+        }
+        #chartContainer {
+            margin: 20px auto;
+            max-width: 900px;
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Chart with All Labels</h1>
+    <div id="chartContainer">
+        <canvas id="testChart" width="800" height="400"></canvas>
+    </div>
+    
+    <script>
+        // Generate sample data
+        const generateSampleData = (days) => {
+            const data = [];
+            const now = new Date();
+            for (let i = days - 1; i >= 0; i--) {
+                const date = new Date(now);
+                date.setDate(date.getDate() - i);
+                data.push({
+                    date: date,
+                    value: Math.floor(Math.random() * 50000) + 10000
+                });
+            }
+            return data;
+        };
+
+        // Draw chart function
+        function drawChart() {
+            const canvas = document.getElementById('testChart');
+            const ctx = canvas.getContext('2d');
+            const width = 800;
+            const height = 400;
+            const padding = 60;
+            const bottomPadding = 80;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Get data - 7 days of sample data
+            const data = generateSampleData(7);
+            
+            // Find min and max values
+            const maxValue = Math.max(...data.map(d => d.value));
+            const minValue = Math.min(...data.map(d => d.value));
+            const valueRange = maxValue - minValue || 1;
+            
+            // Draw axes
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - bottomPadding);
+            ctx.lineTo(width - padding, height - bottomPadding);
+            ctx.stroke();
+            
+            // Draw grid lines (5 horizontal lines)
+            ctx.strokeStyle = '#f0f0f0';
+            ctx.lineWidth = 1;
+            
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (height - bottomPadding - padding) * i / 4;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+            
+            // Draw line
+            ctx.strokeStyle = '#4F46E5';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            data.forEach((point, index) => {
+                const x = padding + (width - 2 * padding) * index / (data.length - 1);
+                const y = height - bottomPadding - ((point.value - minValue) / valueRange) * (height - bottomPadding - padding);
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+            
+            // Draw points
+            ctx.fillStyle = '#4F46E5';
+            data.forEach((point, index) => {
+                const x = padding + (width - 2 * padding) * index / (data.length - 1);
+                const y = height - bottomPadding - ((point.value - minValue) / valueRange) * (height - bottomPadding - padding);
+                
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+            
+            // Add labels
+            ctx.fillStyle = '#666';
+            ctx.font = '10px sans-serif';
+            
+            // X-axis labels - one for each data point
+            const dateFormat = (date) => {
+                return (date.getMonth() + 1) + '/' + date.getDate();
+            };
+            
+            // Draw date label for each data point
+            data.forEach((point, index) => {
+                const x = padding + (width - 2 * padding) * index / (data.length - 1);
+                ctx.save();
+                ctx.translate(x, height - bottomPadding + 15);
+                ctx.rotate(-45 * Math.PI / 180);
+                ctx.textAlign = 'right';
+                ctx.fillText(dateFormat(point.date), 0, 0);
+                ctx.restore();
+            });
+            
+            // Y-axis labels - 5 labels
+            ctx.textAlign = 'right';
+            ctx.font = '11px sans-serif';
+            const formatNumber = (num) => {
+                if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+                if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+                return Math.round(num).toString();
+            };
+            
+            for (let i = 0; i <= 4; i++) {
+                const value = minValue + (valueRange * (4 - i) / 4);
+                const y = padding + (height - bottomPadding - padding) * i / 4;
+                ctx.fillText(formatNumber(value), padding - 10, y + 5);
+            }
+            
+            // Title
+            ctx.fillStyle = '#333';
+            ctx.font = '16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Test Chart - All Labels Visible', width / 2, padding - 20);
+        }
+        
+        // Draw chart on load
+        drawChart();
+    </script>
+</body>
+</html>

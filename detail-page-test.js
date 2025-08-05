@@ -167,6 +167,12 @@ function displayStartupDetails(startup) {
                 </div>
             </div>
             
+            <!-- Export/Track Actions - Moved to top -->
+            <div class="detail-actions">
+                <button class="btn btn-secondary export-btn">Export To CSV</button>
+                <button class="btn btn-primary track-btn">Track Topic</button>
+            </div>
+            
             <!-- Company Info Section -->
             <div class="detail-info-row">
                 <div class="info-item">
@@ -339,11 +345,7 @@ function displayStartupDetails(startup) {
                 </div>
             </div>
             
-            <!-- Export/Track Actions -->
-            <div class="detail-actions">
-                <button class="btn btn-secondary export-btn">Export To CSV</button>
-                <button class="btn btn-primary track-btn">Track Topic</button>
-            </div>
+
         </div>
     `;
     

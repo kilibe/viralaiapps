@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Page Test - Viral AI Apps</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Add a simple wrapper to simulate modal body */
+        .test-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fafafa;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-wrapper">
+        <div class="detail-page">
+            <!-- Header Section -->
+            <div class="detail-header">
+                <div class="detail-title-section">
+                    <h1>ChatGPT</h1>
+                    <p class="detail-description">Advanced AI chatbot powered by OpenAI's GPT-4 technology, offering conversational AI capabilities for various applications</p>
+                </div>
+                <div class="detail-metrics-wrapper">
+                    <div class="detail-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">2.5M</div>
+                            <div class="metric-label">Virality <span class="info-icon" title="Monthly active users">ⓘ</span></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value growth-positive">+156%</div>
+                            <div class="metric-label">Growth <span class="info-icon" title="30-day growth rate">ⓘ</span></div>
+                        </div>
+                    </div>
+                    <!-- Company Info Box below metrics -->
+                    <div class="company-info-box">
+                        <div class="info-box-content">
+                            <strong>Website:</strong> <a href="#" class="info-link">chat.openai.com</a><br>
+                            <strong>Social Media:</strong> 
+                            <a href="#" class="social-inline-link">𝕏</a> 
+                            <a href="#" class="social-inline-link">in</a> 
+                            <a href="#" class="social-inline-link">▶</a><br>
+                            <strong>Total Funding:</strong> $11.3B<br>
+                            <strong>Latest Round:</strong> Series E
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Export/Track Actions -->
+            <div class="detail-actions">
+                <button class="btn btn-secondary export-btn">Export To CSV</button>
+                <button class="btn btn-primary track-btn">Track Topic</button>
+            </div>
+            
+            <!-- Chart Section -->
+            <div class="detail-chart-container">
+                <div class="chart-header-controls">
+                    <div class="chart-time-selector">
+                        <button class="time-option" data-range="7 days">7D</button>
+                        <button class="time-option" data-range="30 days">30D</button>
+                        <button class="time-option" data-range="3 months">3M</button>
+                        <button class="time-option" data-range="6 months">6M</button>
+                        <button class="time-option" data-range="1 year">1Y</button>
+                        <button class="time-option active" data-range="5 years">5 Years</button>
+                    </div>
+                    <div class="chart-actions">
+                        <button class="btn-icon forecast-btn" title="Toggle Forecast">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M3 10L7 6L11 10L17 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M13 4H17V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Forecast
+                        </button>
+                        <span class="info-icon" title="AI-powered growth forecast">ⓘ</span>
+                    </div>
+                </div>
+                <div id="detail-virality-chart">
+                    <svg width="100%" height="350" viewBox="0 0 900 350">
+                        <!-- Simple chart placeholder -->
+                        <path d="M50 300 L150 250 L250 200 L350 180 L450 150 L550 120 L650 100 L750 80 L850 50" 
+                              stroke="#4F46E5" stroke-width="3" fill="none"/>
+                        <line x1="50" y1="300" x2="850" y2="300" stroke="#e5e7eb" stroke-width="1"/>
+                        <text x="450" y="330" text-anchor="middle" fill="#6b7280" font-size="14">Time →</text>
+                        <text x="30" y="175" text-anchor="middle" fill="#6b7280" font-size="14" transform="rotate(-90 30 175)">Growth →</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
