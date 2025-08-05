@@ -227,60 +227,12 @@ function getCookieModalContent() {
     return `
         <div class="modal-header" style="border-bottom: 1px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 24px;">
             <h2 style="color: #2d3748; margin: 0; display: flex; align-items: center; gap: 8px;">
-                🍪 Cookie Preferences
+                🍪 Cookie Policy
             </h2>
-            <p style="color: #4a5568; font-size: 14px; margin: 8px 0 0 0;">Customize your cookie settings and privacy preferences</p>
         </div>
-        <div class="cookie-content">
-            <p style="color: #4a5568; line-height: 1.6; margin-bottom: 24px;">We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. You can customize which cookies to accept below.</p>
-            
-            <div class="cookie-categories" style="margin-bottom: 24px;">
-                <div class="cookie-category" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <h4 style="color: #2d3748; margin: 0;">🔧 Essential Cookies</h4>
-                        <div class="toggle-switch" style="position: relative; width: 44px; height: 24px; background: #4CAF50; border-radius: 12px; cursor: not-allowed; opacity: 0.7;">
-                            <div style="position: absolute; top: 2px; right: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.3s;"></div>
-                        </div>
-                    </div>
-                    <p style="color: #4a5568; font-size: 14px; margin: 0;">Required for basic website functionality. Cannot be disabled.</p>
-                </div>
-                
-                <div class="cookie-category" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <h4 style="color: #2d3748; margin: 0;">📊 Analytics Cookies</h4>
-                        <div class="toggle-switch analytics-toggle" style="position: relative; width: 44px; height: 24px; background: #4CAF50; border-radius: 12px; cursor: pointer;" onclick="toggleCookie('analytics', this)">
-                            <div style="position: absolute; top: 2px; right: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.3s;"></div>
-                        </div>
-                    </div>
-                    <p style="color: #4a5568; font-size: 14px; margin: 0;">Help us understand how visitors interact with our website by collecting and reporting information anonymously.</p>
-                </div>
-                
-                <div class="cookie-category" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <h4 style="color: #2d3748; margin: 0;">🎯 Marketing Cookies</h4>
-                        <div class="toggle-switch marketing-toggle" style="position: relative; width: 44px; height: 24px; background: #ccc; border-radius: 12px; cursor: pointer;" onclick="toggleCookie('marketing', this)">
-                            <div style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.3s;"></div>
-                        </div>
-                    </div>
-                    <p style="color: #4a5568; font-size: 14px; margin: 0;">Used to track visitors across websites for personalized advertising and content recommendations.</p>
-                </div>
-                
-                <div class="cookie-category" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <h4 style="color: #2d3748; margin: 0;">⚙️ Functional Cookies</h4>
-                        <div class="toggle-switch functional-toggle" style="position: relative; width: 44px; height: 24px; background: #4CAF50; border-radius: 12px; cursor: pointer;" onclick="toggleCookie('functional', this)">
-                            <div style="position: absolute; top: 2px; right: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.3s;"></div>
-                        </div>
-                    </div>
-                    <p style="color: #4a5568; font-size: 14px; margin: 0;">Enable enhanced functionality like remembering your preferences and settings.</p>
-                </div>
-            </div>
-            
-            <div class="cookie-actions" style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 16px; border-top: 1px solid #e2e8f0;">
-                <button onclick="rejectAllCookies()" style="padding: 10px 20px; border: 1px solid #ccc; background: white; color: #4a5568; border-radius: 6px; cursor: pointer; font-size: 14px;">Reject All</button>
-                <button onclick="acceptSelectedCookies()" style="padding: 10px 20px; border: none; background: #FF4500; color: white; border-radius: 6px; cursor: pointer; font-size: 14px;">Accept Selected</button>
-                <button onclick="acceptAllCookies()" style="padding: 10px 20px; border: none; background: #4CAF50; color: white; border-radius: 6px; cursor: pointer; font-size: 14px;">Accept All</button>
-            </div>
+        <div class="cookie-content" style="padding: 20px;">
+            <p style="color: #4a5568; line-height: 1.6; margin-bottom: 16px;">This website uses cookies to ensure you get the best experience on our website.</p>
+            <p style="color: #4a5568; line-height: 1.6;">By continuing to use this site, you accept our use of cookies.</p>
         </div>
     `;
 }
