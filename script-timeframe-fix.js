@@ -365,9 +365,18 @@ window.applyFilters = function applyFilters() {
     
     // Apply funding filter
     if (currentFilters.minFunding) {
-        filteredEntities = filteredEntities.filter(entity => 
-            (entity.latest_funding_amount || 0) >= currentFilters.minFunding
-        );
+        if (currentFilters.minFunding < 0) {
+            // Negative value means "less than" filter
+            const maxFunding = Math.abs(currentFilters.minFunding);
+            filteredEntities = filteredEntities.filter(entity => 
+                (entity.latest_funding_amount || 0) < maxFunding
+            );
+        } else {
+            // Positive value means "greater than or equal to" filter
+            filteredEntities = filteredEntities.filter(entity => 
+                (entity.latest_funding_amount || 0) >= currentFilters.minFunding
+            );
+        }
     }
     
     // Apply round type filter
