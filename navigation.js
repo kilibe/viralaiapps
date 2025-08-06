@@ -68,7 +68,14 @@ function loadContent(section) {
             tableContainer.style.display = 'block';
             // Reload data if needed
             if (window.allEntities && window.allEntities.length > 0) {
+                // Reset filters to default for startups
+                if (window.currentFilters) {
+                    window.currentFilters.minFunding = null;
+                }
                 window.applyFilters();
+            } else {
+                // Force reload data if not available
+                location.reload();
             }
             break;
         case 'unicorns':
@@ -79,11 +86,16 @@ function loadContent(section) {
             filtersSection.style.display = 'block';
             tableContainer.style.display = 'block';
             // Apply unicorn filter
-            if (window.currentFilters) {
-                window.currentFilters.minFunding = 1000000000; // 1B+ funding
-                if (window.applyFilters) {
-                    window.applyFilters();
+            if (window.allEntities && window.allEntities.length > 0) {
+                if (window.currentFilters) {
+                    window.currentFilters.minFunding = 1000000000; // 1B+ funding
+                    if (window.applyFilters) {
+                        window.applyFilters();
+                    }
                 }
+            } else {
+                // Force reload data if not available
+                location.reload();
             }
             break;
         case 'reports':
