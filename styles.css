@@ -575,14 +575,32 @@ body[data-page="detail"] .mobile-logo-pattern {
 }
 
 /* Category Color Classes */
-.category-teal,
-.category-orange,
-.category-navy,
-.category-dark,
-.category-bronze,
-.category-maroon,
+.category-teal {
+    color: #008080 !important;
+}
+
+.category-orange {
+    color: #FF4500 !important;
+}
+
+.category-navy {
+    color: #003366 !important;
+}
+
+.category-dark {
+    color: #333333 !important;
+}
+
+.category-bronze {
+    color: #CD7F32 !important;
+}
+
+.category-maroon {
+    color: #800000 !important;
+}
+
 .category-slate {
-    color: #9ca3af !important;
+    color: #708090 !important;
 }
 
 /* Additional category mappings */
