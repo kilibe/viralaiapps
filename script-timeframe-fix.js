@@ -11,8 +11,28 @@ let currentFilters = {
     roundType: null
 };
 
+// Make these available globally for navigation
+window.allEntities = allEntities;
+window.currentFilters = currentFilters;
+
 // Initialize Supabase and load data directly
 (async function() {
+    // Check if we should load data based on the active navigation
+    function shouldLoadTableData() {
+        const activeNav = document.querySelector('.nav-item.active');
+        if (!activeNav) return true; // Default to loading if no active nav
+        
+        const activeText = activeNav.textContent.toLowerCase();
+        // Only load table data for startups and unicorns pages
+        return activeText === 'startups' || activeText === 'unicorns';
+    }
+    
+    // Don't load if we're not on a page that needs the table
+    if (!shouldLoadTableData()) {
+        console.log('Skipping table data load - not on startups/unicorns page');
+        return;
+    }
+    
     console.log('Starting direct data load...');
     
     const supabaseUrl = 'https://rygermxpngibrkvmpqqf.supabase.co';
@@ -47,6 +67,7 @@ let currentFilters = {
         
         // Initialize allEntities as a copy of originalEntities
         allEntities = [...originalEntities];
+        window.allEntities = allEntities; // Update global reference
         
         // Load ALL metrics data upfront
         await loadAllMetrics();
@@ -213,6 +234,9 @@ function calculateMetricsForTimeFrame(days) {
         };
     });
     
+    // Update global reference
+    window.allEntities = allEntities;
+    
     // Apply filters and display
     applyFilters();
 }
@@ -309,7 +333,7 @@ function displayEntities(entities) {
 }
 
 // Function to apply filters
-function applyFilters() {
+window.applyFilters = function applyFilters() {
     let filteredEntities = [...allEntities];
     
     // Apply category filter

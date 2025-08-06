@@ -52,33 +52,54 @@ function loadContent(section) {
     switch(section.toLowerCase()) {
         case 'tracking':
             pageHeader.textContent = 'Tracking';
-            pageDescription.textContent = 'Track your favorite AI applications and their growth metrics';
+            if (pageDescription) {
+                pageDescription.textContent = 'Track your favorite AI applications and their growth metrics';
+            }
             filtersSection.style.display = 'none';
             tableContainer.style.display = 'none';
             showTrackingContent();
             break;
         case 'startups':
-            pageHeader.textContent = 'AI Startups Directory';
-            pageDescription.textContent = 'Comprehensive list of AI startups and emerging companies';
+            pageHeader.textContent = 'Viral AI Apps & Startups';
+            if (pageDescription) {
+                pageDescription.textContent = 'Comprehensive list of AI startups and emerging companies';
+            }
             filtersSection.style.display = 'block';
             tableContainer.style.display = 'block';
+            // Reload data if needed
+            if (window.allEntities && window.allEntities.length > 0) {
+                window.applyFilters();
+            }
             break;
         case 'unicorns':
             pageHeader.textContent = 'AI Unicorns';
-            pageDescription.textContent = 'Billion-dollar AI companies leading the industry';
+            if (pageDescription) {
+                pageDescription.textContent = 'Billion-dollar AI companies leading the industry';
+            }
             filtersSection.style.display = 'block';
             tableContainer.style.display = 'block';
+            // Apply unicorn filter
+            if (window.currentFilters) {
+                window.currentFilters.minFunding = 1000000000; // 1B+ funding
+                if (window.applyFilters) {
+                    window.applyFilters();
+                }
+            }
             break;
         case 'reports':
             pageHeader.textContent = 'Viral AI Apps Weekly Reports';
-            pageDescription.textContent = 'Weekly insights on viral AI trends.';
+            if (pageDescription) {
+                pageDescription.textContent = 'Weekly insights on viral AI trends.';
+            }
             filtersSection.style.display = 'none';
             tableContainer.style.display = 'none';
             showReportsContent();
             break;
         case 'api':
             pageHeader.textContent = 'API Documentation';
-            pageDescription.textContent = 'Access our data programmatically with our REST API';
+            if (pageDescription) {
+                pageDescription.textContent = 'Access our data programmatically with our REST API';
+            }
             filtersSection.style.display = 'none';
             tableContainer.style.display = 'none';
             showApiContent();
@@ -112,27 +133,10 @@ function showReportsContent() {
     const customContent = document.createElement('div');
     customContent.className = 'custom-content';
     customContent.innerHTML = `
-        <div class="newsletter-grid" style="margin-top: 20px;">
-            <div class="newsletter-card" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
-                <div class="newsletter-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <h3 style="color: #2d3748; margin: 0;">📊 Weekly Report #24</h3>
-                    <span class="date" style="color: #718096; font-size: 14px;">January 29, 2025</span>
-                </div>
-                <div class="newsletter-preview" style="margin-bottom: 16px;">
-                    <p style="color: #4a5568; line-height: 1.6; margin: 0;">This week: ChatGPT reaches 200M users, new AI coding assistants emerge, and breakthrough in multimodal AI technology reshapes the industry landscape...</p>
-                </div>
-                <a href="#" class="read-more" style="color: #FF4500; text-decoration: none; font-weight: 500;">Read Full Report →</a>
-            </div>
-            <div class="newsletter-card" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
-                <div class="newsletter-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <h3 style="color: #2d3748; margin: 0;">📈 Weekly Report #23</h3>
-                    <span class="date" style="color: #718096; font-size: 14px;">January 22, 2025</span>
-                </div>
-                <div class="newsletter-preview" style="margin-bottom: 16px;">
-                    <p style="color: #4a5568; line-height: 1.6; margin: 0;">Major AI funding rounds this week, including $50M Series B for leading AI video platform, plus analysis of emerging trends in AI-powered productivity tools...</p>
-                </div>
-                <a href="#" class="read-more" style="color: #FF4500; text-decoration: none; font-weight: 500;">Read Full Report →</a>
-            </div>
+        <div class="coming-soon" style="text-align: center; padding: 60px 20px; background: #f8f9fa; border-radius: 12px; margin-top: 20px;">
+            <h2 style="color: #2d3748; margin-bottom: 16px;">📊 Viral AI Apps Weekly Reports</h2>
+            <p style="color: #4a5568; font-size: 16px; margin-bottom: 20px;">In-depth weekly analysis of viral AI trends, funding rounds, and industry insights.</p>
+            <p style="color: #718096; font-size: 14px;">Coming Soon - Stay Tuned!</p>
         </div>
     `;
     mainContent.appendChild(customContent);
@@ -143,27 +147,10 @@ function showApiContent() {
     const customContent = document.createElement('div');
     customContent.className = 'custom-content';
     customContent.innerHTML = `
-        <div class="api-docs" style="margin-top: 20px;">
-            <div class="api-section" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
-                <h3 style="color: #2d3748; margin-bottom: 16px;">🚀 Get Started</h3>
-                <p style="color: #4a5568; line-height: 1.6; margin-bottom: 16px;">Access our comprehensive AI startup database through our REST API.</p>
-                <div class="code-block" style="background: #f7fafc; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-                    <code style="color: #2d3748; font-family: 'Monaco', 'Consolas', monospace;">
-                        GET https://api.viralaiapps.com/v1/startups<br>
-                        Authorization: Bearer YOUR_API_KEY
-                    </code>
-                </div>
-                <p style="color: #718096; font-size: 14px; margin: 0;">API documentation and endpoints are currently under development. Sign up to be notified when they're ready!</p>
-            </div>
-            <div class="api-section" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                <h3 style="color: #2d3748; margin-bottom: 16px;">📋 Available Endpoints</h3>
-                <ul style="color: #4a5568; line-height: 1.8; margin: 0; padding-left: 20px;">
-                    <li>/startups - Get AI startup data</li>
-                    <li>/unicorns - Get billion-dollar AI companies</li>
-                    <li>/metrics - Get growth and usage metrics</li>
-                    <li>/forecasts - Get AI-powered growth predictions</li>
-                </ul>
-            </div>
+        <div class="coming-soon" style="text-align: center; padding: 60px 20px; background: #f8f9fa; border-radius: 12px; margin-top: 20px;">
+            <h2 style="color: #2d3748; margin-bottom: 16px;">🚀 API Documentation</h2>
+            <p style="color: #4a5568; font-size: 16px; margin-bottom: 20px;">Access our comprehensive AI startup database programmatically with our REST API.</p>
+            <p style="color: #718096; font-size: 14px;">Coming Soon - Stay Tuned!</p>
         </div>
     `;
     mainContent.appendChild(customContent);
@@ -227,12 +214,58 @@ function getCookieModalContent() {
     return `
         <div class="modal-header" style="border-bottom: 1px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 24px;">
             <h2 style="color: #2d3748; margin: 0; display: flex; align-items: center; gap: 8px;">
-                🍪 Cookie Policy
+                🍪 Cookie Settings
             </h2>
+            <p style="color: #4a5568; font-size: 14px; margin: 8px 0 0 0;">We use cookies to improve your experience. Choose which cookies you'd like to allow.</p>
         </div>
-        <div class="cookie-content" style="padding: 20px;">
-            <p style="color: #4a5568; line-height: 1.6; margin-bottom: 16px;">This website uses cookies to ensure you get the best experience on our website.</p>
-            <p style="color: #4a5568; line-height: 1.6;">By continuing to use this site, you accept our use of cookies.</p>
+        <div class="cookie-content">
+            <div style="margin-bottom: 24px;">
+                <div class="cookie-category" style="margin-bottom: 20px; padding: 16px; background: #f8f9fa; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <h3 style="color: #2d3748; margin: 0; font-size: 16px;">Essential Cookies</h3>
+                        <div class="toggle-switch disabled" style="width: 50px; height: 26px; background: #4CAF50; border-radius: 13px; position: relative; cursor: not-allowed;">
+                            <div style="position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.3s;"></div>
+                        </div>
+                    </div>
+                    <p style="color: #4a5568; font-size: 14px; margin: 0;">Required for the website to function properly. Cannot be disabled.</p>
+                </div>
+                
+                <div class="cookie-category" style="margin-bottom: 20px; padding: 16px; background: #f8f9fa; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <h3 style="color: #2d3748; margin: 0; font-size: 16px;">Analytics Cookies</h3>
+                        <div class="toggle-switch" onclick="toggleCookie('analytics', this)" style="width: 50px; height: 26px; background: #4CAF50; border-radius: 13px; position: relative; cursor: pointer;">
+                            <div style="position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.3s;"></div>
+                        </div>
+                    </div>
+                    <p style="color: #4a5568; font-size: 14px; margin: 0;">Help us understand how visitors use our website.</p>
+                </div>
+                
+                <div class="cookie-category" style="margin-bottom: 20px; padding: 16px; background: #f8f9fa; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <h3 style="color: #2d3748; margin: 0; font-size: 16px;">Marketing Cookies</h3>
+                        <div class="toggle-switch" onclick="toggleCookie('marketing', this)" style="width: 50px; height: 26px; background: #ccc; border-radius: 13px; position: relative; cursor: pointer;">
+                            <div style="position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.3s;"></div>
+                        </div>
+                    </div>
+                    <p style="color: #4a5568; font-size: 14px; margin: 0;">Used to deliver personalized advertisements.</p>
+                </div>
+                
+                <div class="cookie-category" style="margin-bottom: 20px; padding: 16px; background: #f8f9fa; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <h3 style="color: #2d3748; margin: 0; font-size: 16px;">Functional Cookies</h3>
+                        <div class="toggle-switch" onclick="toggleCookie('functional', this)" style="width: 50px; height: 26px; background: #4CAF50; border-radius: 13px; position: relative; cursor: pointer;">
+                            <div style="position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.3s;"></div>
+                        </div>
+                    </div>
+                    <p style="color: #4a5568; font-size: 14px; margin: 0;">Enable enhanced functionality and personalization.</p>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                <button onclick="rejectAllCookies()" style="padding: 10px 20px; border: 1px solid #d1d5db; background: white; color: #374151; border-radius: 6px; font-size: 14px; cursor: pointer;">Reject All</button>
+                <button onclick="acceptSelectedCookies()" style="padding: 10px 20px; border: 1px solid #d1d5db; background: white; color: #374151; border-radius: 6px; font-size: 14px; cursor: pointer;">Save Preferences</button>
+                <button onclick="acceptAllCookies()" style="padding: 10px 20px; background: #FF4500; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer;">Accept All</button>
+            </div>
         </div>
     `;
 }
