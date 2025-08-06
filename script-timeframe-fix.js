@@ -7,7 +7,7 @@ let currentFilters = {
     category: null,
     minGrowth: null,
     minVirality: null,
-    minFunding: null,
+    minFunding: window.defaultMinFunding || null, // Use default if set (for unicorns page)
     roundType: null
 };
 
