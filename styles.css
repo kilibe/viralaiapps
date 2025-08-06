@@ -1397,9 +1397,10 @@ body[data-page="detail"] .mobile-logo-pattern {
     .mobile-logo-pattern {
         display: block;
         height: 64px; /* Match logo height exactly */
-        background-size: calc(100% / 3) 64px; /* 3 logos across, 4x bigger height */
+        background-size: auto 64px; /* Single logo, 4x bigger height */
         margin: 0; /* Remove all margins */
         background-position: center;
+        background-repeat: no-repeat; /* Don't repeat the logo */
         opacity: 0.9;
     }
     
