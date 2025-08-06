@@ -15,23 +15,18 @@ function initializeNavigation() {
         return;
     }
     
-    navItems.forEach((item, index) => {
-        console.log(`Setting up click listener for item ${index}:`, item.textContent);
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Navigation clicked:', this.textContent);
-            
-            // Remove active class from all items
-            navItems.forEach(navItem => {
-                navItem.classList.remove('active');
-            });
-            
-            // Add active class to clicked item
-            this.classList.add('active');
-            
-            // Load content based on selection
-            loadContent(this.textContent);
-        });
+    // Set active state based on current URL
+    const currentPath = window.location.pathname;
+    navItems.forEach((item) => {
+        const itemPath = item.getAttribute('href');
+        if (currentPath === itemPath || 
+            (currentPath === '/index.html' && itemPath === '/') ||
+            (currentPath.endsWith('/') && itemPath === currentPath) ||
+            (currentPath.includes(itemPath) && itemPath !== '/')) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
     });
 }
 
