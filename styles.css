@@ -1379,13 +1379,14 @@ body[data-page="detail"] .mobile-logo-pattern {
         height: auto;
         position: relative;
         order: -1;
+        padding: 16px 0 0 0; /* Reduced top padding, removed bottom */
     }
     
     .logo {
         text-align: center;
         padding: 0 16px;
         border-bottom: 1px solid #f0f0f0;
-        margin-bottom: 16px;
+        margin-bottom: 8px; /* Reduced from 16px */
     }
     
     /* Hide desktop logo on mobile */
@@ -1407,7 +1408,7 @@ body[data-page="detail"] .mobile-logo-pattern {
     .nav-menu {
         display: flex;
         overflow-x: auto;
-        padding: 0 16px;
+        padding: 0 16px 8px 16px; /* Added small bottom padding */
         gap: 8px;
     }
     
@@ -1429,8 +1430,13 @@ body[data-page="detail"] .mobile-logo-pattern {
         padding-bottom: 40px; /* Adjusted for thinner nav bar on mobile */
     }
     
+    .page-header {
+        margin-bottom: 4px; /* Further reduced for tighter mobile spacing */
+    }
+    
     .page-header h1 {
         font-size: 24px;
+        margin-bottom: 4px; /* Added small margin */
     }
     
     .page-header p {
@@ -1439,7 +1445,7 @@ body[data-page="detail"] .mobile-logo-pattern {
     
     .filters-section {
         padding: 16px;
-        margin-bottom: 20px;
+        margin-bottom: 8px; /* Reduced from 20px to minimize vertical gap */
     }
     
     .filter-group {
@@ -2217,7 +2223,7 @@ body[data-page="detail"] .mobile-logo-pattern {
     }
     
     .page-header {
-        margin-bottom: 20px;
+        margin-bottom: 8px; /* Further reduced for very small screens */
     }
     
     .page-header h1 {
@@ -2225,7 +2231,8 @@ body[data-page="detail"] .mobile-logo-pattern {
     }
     
     .filters-section {
-        padding: 12px;
+        padding: 12px 12px 8px 12px; /* Reduced bottom padding */
+        margin-bottom: 4px; /* Minimal gap to table */
     }
     
     .filter-group {
