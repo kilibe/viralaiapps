@@ -1418,6 +1418,47 @@ body[data-page="detail"] .mobile-logo-pattern {
         border-left: none;
         white-space: nowrap;
         flex-shrink: 0;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    /* Add emoji icons for specific nav items on mobile */
+    .nav-item[href="/tracking/"]:before {
+        content: "⭐";
+        filter: grayscale(1);
+        opacity: 0.8;
+        font-size: 16px;
+    }
+    
+    .nav-item[href="/reports/"]:before {
+        content: "📝";
+        filter: grayscale(1);
+        opacity: 0.8;
+        font-size: 16px;
+    }
+    
+    .nav-item[href="/api/"]:before {
+        content: "🔌";
+        filter: grayscale(1);
+        opacity: 0.8;
+        font-size: 16px;
+    }
+    
+    /* Hide the text for these items on mobile */
+    .nav-item[href="/tracking/"],
+    .nav-item[href="/reports/"],
+    .nav-item[href="/api/"] {
+        font-size: 0; /* Hide text */
+        padding: 8px 12px; /* Smaller padding for icon-only items */
+    }
+    
+    /* Keep emoji visible */
+    .nav-item[href="/tracking/"]:before,
+    .nav-item[href="/reports/"]:before,
+    .nav-item[href="/api/"]:before {
+        font-size: 18px; /* Slightly larger emoji */
     }
     
     .nav-item.active {
