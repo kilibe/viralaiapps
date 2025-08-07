@@ -1,0 +1,25 @@
+/* Mobile Vertical Spacing Fix - Remove padding between filters and table */
+@media (max-width: 768px) {
+    /* Reduce bottom margin of filters section on mobile */
+    .filters-section {
+        margin-bottom: 8px; /* Reduced from 20px */
+    }
+    
+    /* Optional: If you want even tighter spacing */
+    .page-header {
+        margin-bottom: 4px; /* Reduced from 8px */
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    /* Even tighter spacing for very small screens */
+    .filters-section {
+        margin-bottom: 4px; /* Further reduced */
+        padding: 12px 12px 8px 12px; /* Reduced bottom padding */
+    }
+    
+    .page-header {
+        margin-bottom: 2px; /* Minimal spacing */
+    }
+}
